@@ -1,0 +1,30 @@
+/* 1ST.BIN */
+
+_divFixed                        = 0x06004028;
+_translateGbrMatrix              = 0x060040b4;
+_cos                             = 0x060042d4;
+_sin                             = 0x060042f8;
+_rotateGbrMatrixY                = 0x060085d0;
+_getCoordInGbrMatrixSpace        = 0x060086c0;
+_multFixed                       = 0x060091a0;
+_atan2                           = 0x060091e4;
+_gbrSetMsScreenDist              = 0x0600b770;
+_gbrSetFov                       = 0x0600ba0c;
+_getRandomUShort                 = 0x0600e980;
+_addIntJob                       = 0x06011268;
+_removeIntJobByFunc              = 0x06011318;
+_waitFrames                      = 0x06011824;
+_someBufferedButtonsFunc         = 0x06011b68;
+_loadPartialFileToAddrWithoutCallback = 0x060129fc;
+_queueAudioCommand               = 0x06012e4c;
+_getBoundedRandom                = 0x06013e30;
+_setColorFadeTransition          = 0x060147c8;
+_resetColorFadeTransition        = 0x060148ac;
+_popGbrMatrix                    = 0x06015c88;
+_pushGbrMatrix                   = 0x06015cac;
+_divSigned                       = 0x0601f914;
+_memcpy                          = 0x0601fa08;
+
+_g_buttonsDown                   = 0x0601fc48;
+_g_bufferedButtonsDown           = 0x0601fc4a;
+_g_cameraPos                     = 0x06022110;

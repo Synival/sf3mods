@@ -1,0 +1,4 @@
+; (X003.BIN loaded at 0x06034B00)
+
+; Hijack Snd command (06038f44)
+4444,06088018,060fd1a0

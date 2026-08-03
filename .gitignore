@@ -1,0 +1,11 @@
+/build/
+/.vs/
+/tmp/
+/dfrc
+/update_mods.sh
+/sh2-toolchain
+/game-files/scn1
+/game-files/scn2
+/game-files/scn3
+/game-files/pd
+/sh2-elf-gcc

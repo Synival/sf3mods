@@ -1,0 +1,21 @@
+; Palette changes from Scn1 -> PD
+10468,906490849484948594a598a598a698c6,a94aad6bb18cb5ada0e8a108a509a529
+10568,8421908498c6a108a529a94aad6bb18c,c210c210c210c210c210c210c210c210
+10578,b5adb9ceb9cebdefbdefbdefc210c210,c210c210c210c210c210c210c210c210
+10588,c210c210c631c631c631ca52ca52ce73,c210c210c210c210c210c210c210c210
+10598,d294d6b5dad6def7e318eb5af39cffff,c210c210c210c210c210c210c210c210
+
+; No-op the original function that sets the light position
+21da,400b,0009
+
+; Hijack an init function with our new init_lighting().
+; (init_lighting() will call the function we just hijacked.)
+01750,060909bc,0609a624
+
+; Disable code that increases the magnitude of the light vector for 150% all
+; the time (wtf is that about)
+0c480,6110,e100
+
+; All new lighting functions
+; (this is placed in space freed for use by "Mod Essentials")
+{ elf=x014.elf section=.patch offset=0x12624 replace_zeroes max_length=0x32c }

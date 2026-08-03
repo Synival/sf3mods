@@ -1,0 +1,20 @@
+; Hijack 48a0 through 48ce (-1)
+; (runs function then jumps to end)
+
+048a0,d151410b64039496d150410b0009da50,d00364936523400b66d3a08c00090000
+048b0,e5014a0b6483689364854a0be505db4d,06098e58000000000000000000000000
+048c0,dc4de5004c0b64b3d14c410b0009    ,0000000000000000da4968937802
+
+; ^^^
+; d003 mov (06098e58),r0
+; 6493 mov r9(levelUpInfoAddr),r4
+; 6523 mov r2(polyChar),r5
+; 400b jsr @r0
+; 66d3 mov r13(unit),r6
+; a08c bra <end of function>
+; 0009 nop
+; 0000 ---
+; 06098e58 (data -- address of function)
+
+; New code
+{ elf=x014.elf section=.patch offset=0x10e58 replace_zeroes }

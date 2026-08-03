@@ -1,0 +1,3 @@
+; Replace some debugging code that can't be accessed by regular means.
+
+{ elf=x001.elf section=.patch offset=0x1b0 length=0x24c }

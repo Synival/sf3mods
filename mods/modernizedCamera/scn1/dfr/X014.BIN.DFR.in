@@ -1,0 +1,71 @@
+; There are a few important changes in the Premium Disk's code:
+; -------------------------------------------------------------
+; - The camera functions take a pointer to a camera in R4 now. Scenario 1 has a
+;   global camera, so we can just set R4 to that.
+;
+; - The camera structure has been re-arranged. These addresses have to change:
+;    - rot.x:      0x0c -> 0x00
+;    - rot.y:      0x0e -> 0x02
+;    - camTarget:  0x12 -> 0x1c
+;    - velocity:   0x18 -> 0x0c
+;    - targetDist: 0x1c -> 0x20
+;    - camMode:    0x24 -> 0x14
+;    - stage:      0x26 -> 0x16
+;    - frame:      0x2a -> 0x1a
+;    - setTo1WhenInited: 0x2e -> none (noop these)
+;
+; - Some global addresses need to change:
+;    -  ; g_flipBattleSide:             0609d1dc -> 0609ccbc
+;    -  ; g_attackerPolyChar:           0609a04c -> 060973e4
+;    -  ; g_victimPolyChar:             0609a050 -> 060973e8
+;
+; - Some function addresses need to change:
+;    -  ; get_position_on_polyChar():   0608dc00 -> 0608cc84
+;    -  ; atan2():                      0600a6f0 -> 060091e4
+;    -  ; get_angle_for_flipped_side(): 0608dda8 -> 0608d1f8
+;    -  ; get_pitch_between_vectors():  0608da10 -> 0608cac4
+;
+; - The function getFlippedAngle() takes an additional first parameter
+;   on the PD for 'camTarget'. Scenario 1 does not, because it can
+;   dereference the global camera itself. The mov for R4 can be noop'd
+;   and the mov for R5 can be changed to R4.
+
+; ---------------------------------------------------------------------
+
+; Apply letterbox format used in Scenario 3/PD (black bars).
+15d6,ea18,ea2c
+15e8,77e7,77d3
+160e,77e7,77d3
+
+; Change cameraAssign() to our new function.
+00b74,0608d58c,06099ea0
+01c9c,0608d58c,06099ea0
+
+; Jump to some new code at 0x0608d7b0 in the middle of bcmd0x1b().
+; (the original contents here are copied there)
+02ab8,4a0b,da01 ; mov.l @(0x004,pc),r10 ! 0x0608d7b0
+02aba,64f3,4a2b ; jmp @r10
+02abc,2008,0009 ; nop
+02abe,890a,0009 ; nop                   ! needed for alignment
+; Data
+02ac0,d1346112,0608d7b0 ; 0x0608d7b0
+; A whole bunch of code we don't need any more.
+02ac4,7104611121188b007801490be401aff1,00090009000900090009000900090009
+
+; ---------------------------------------------------------------------
+
+; Jump to new code at the end of bcmd0x1b()
+; (placed after smaller getScreenDistForPolyCharAttacker())
+{ elf=x014.elf section=.replaceEndOfBCmd0x1b offset=0x02b68 length=0x014 }
+
+; Replace getScreenDistForPolyCharAttacker() with smaller version and some new
+; code used at the end of bcmd_0x1b().
+{ elf=x014.elf section=.replaceGetScreenDistForAttack offset=0x05628 length=0x094 }
+
+; New code in place of old camera functions, which aren't used anymore.
+{ elf=x014.elf section=.replaceOldCameraFuncs offset=0x057b0 length=0x3e4 }
+
+; New code for cameraAssign() and all remaining new code we need.
+; (this is placed in space freed for use by "Mod Essentials")
+; (code below starts with new cameraAssign() function)
+{ elf=x014.elf section=.codeAndDataInFreedUpMemoryBlock offset=0x11ea0 max_length=0x784 replace_zeroes }
