@@ -1,11 +1,6 @@
-Absolutely before release:
+TODO:
 
-- Documentation
-
-Maybe before release:
-
-Long-term:
-
+- Update 1ST.BIN functions to correct names for SGL, GFS, etc.
 - Rewrite the music patch:
     - Don't use X001 anymore - find a new spot for the new code
     - Verify command requirements
@@ -15,6 +10,7 @@ Long-term:
 
 Done:
 
+- Documentation (README.md)
 - Make DFR(s) for compressAniTables
 - Complain if an .ld file doesn't have objects
 - Add explicit objects to link steps
