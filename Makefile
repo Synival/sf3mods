@@ -55,7 +55,8 @@ SCENARIO_VAL_pd   := 4
 # | Helpful macros |
 # ------------------
 
-get_files = $(patsubst ./%,%,$(shell cd $(1) 2>/dev/null && find . -type f))
+get_files       = $(patsubst ./%,%,$(shell cd $(1) 2>/dev/null && find . -type f))
+get_files_named = $(patsubst ./%,%,$(shell cd $(1) 2>/dev/null && find . -type f -name '$(2)'))
 
 # -------------------------
 # | Check for C23 support |
@@ -94,7 +95,8 @@ dfrc: tools/dfrc/dfrc.c
 
 define DEFINE_SRCS_AND_OBJS
 
-$(1)_SRCS       := $$(call get_files,$(MOD_SRC_PATH))
+$(1)_SRCS       := $$(call get_files_named,$(MOD_SRC_PATH),*.c)
+$(1)_SRCS       += $$(call get_files_named,$(MOD_SRC_PATH),*.S)
 $(MOD_SCN)_SRCS := $$(addprefix $(MOD_SRC_PATH)/,$$($(1)_SRCS))
 $(MOD_SCN)_OBJS := $$(patsubst  $(MOD_SRC_PATH)/%, $(MOD_OBJ_PATH)/%.o, $$($(MOD_SCN)_SRCS))
 
