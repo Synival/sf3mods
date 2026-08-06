@@ -28,11 +28,15 @@ MODS := $(notdir $(wildcard $(MOD_PATH)/*))
 # Otherwise, specify the .?.o file(s) required. The build folder prefix will automatically be added.
 
 addLevelUpAnimation_OBJS_x014 = $(MOD_SCN_OBJS)
-advisorChicken_OBJS_x1aspi_h  = $(MOD_SCN_OBJS)
 compressAniTables_OBJS_x014   = $(MOD_SCN_OBJS)
 modernizedCamera_OBJS_x014    = $(MOD_SCN_OBJS)
 modernizedLighting_OBJS_x014  = $(MOD_SCN_OBJS)
 musicDebugger_OBJS_x001       = $(MOD_SCN_OBJS)
+
+advisorChicken_OBJS_x1aspi_h  = x1aspi_h.c.o
+advisorChicken_OBJS_x1stri_h  = x1stri_h.c.o
+advisorChicken_OBJS_x1rinjin  = x1rinjin.c.o
+advisorChicken_OBJS_x1obhonj  = x1obhonj.c.o
 
 # TODO: musicFix project is WIP! The whole thing really needs to be in better shape,
 #       especially to prepare for a PD fix.

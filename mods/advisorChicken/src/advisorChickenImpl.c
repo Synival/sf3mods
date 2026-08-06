@@ -1,16 +1,19 @@
-#include <stdint.h>
+#if ADVISOR_CHICKEN_COMPILE_IMPL
+
+// Required pre-defined constexprs:
+//
+// - constexpr uint8_t  c_chickenCharId;
+// - constexpr uint16_t c_chickenCluckMsgId;
+// - constexpr uint16_t c_advisorMsgId;
+
+// --------------------------------------------------------------------------------------------------------------------
 
 #include <sf3/1st.h>
 #include <sf3/x002.h>
 #include <sf3/x008.h>
 #include <sf3/x022.h>
 
-// --------------------------------------------------------------------------------------------------------------------
-
-constexpr uint8_t  c_chickenCharId     = 0x40;
-// TODO: these messages depend on the X1 file!
-constexpr uint16_t c_chickenCluckMsgId = 0x8b1;
-constexpr uint16_t c_advisorMsgId      = 0x8d3;
+#include <stdint.h>
 
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -44,10 +47,13 @@ static npc_t c_newNpcTable[2] = {
 // --------------------------------------------------------------------------------------------------------------------
 
 [[gnu::section(".newStartFunction")]]
-void newStartFunction() {
+int32_t newStartFunction() {
     // Initialize a chicken if 1) no Dantares and 2) we haven't beaten the Tower yet.
-    // TODO: Second check should only be for the Lookover HQ
+#if ADVISOR_CHICKEN_CHECK_FOR_PALSIS
     if (!getGameFlag(0x04) && !getGameFlag(0x396)) {
+#else
+    if (!getGameFlag(0x04)) {
+#endif
         loadNpcs(c_newNpcTable, c_chickenCharId);
 
         // SF3 only has one interactable table, so we're just going to hijack Dantares.
@@ -63,7 +69,7 @@ void newStartFunction() {
         }
     }
 
-    originalStartFunction();
+    return originalStartFunction();
 }
 
 // --------------------------------------------------------------------------------------------------------------------
@@ -83,3 +89,10 @@ void talkToAdvisorChicken() {
     // Also unloads X022.BIN
     endScene();
 }
+
+#else
+
+// To prevent compiler complaining about empty translation unit
+const int c_advisorChickenDummy = 0;
+
+#endif // #if ADVISOR_CHICKEN_COMPILE_IMPL
