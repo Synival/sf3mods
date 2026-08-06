@@ -54,6 +54,9 @@ extern void someBufferedButtonsFunc();
 extern volatile controllerButton_e16 g_buttonsDown;
 extern volatile controllerButton_e16 g_bufferedButtonsDown;
 
+extern int g_messageId;
+extern interactable_t *g_interactableTablePtr;
+
 // --------------------------------------------------------------------------------------------------------------------
 
 #endif  // INCLUDED_SF3_1ST

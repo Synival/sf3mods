@@ -12,6 +12,11 @@
 extern battleUnit_t *getUnit(int32_t battleId);
 extern item_t *getItem(int32_t itemId);
 
+extern void beginScene();
+extern void endScene();
+
+extern bool getGameFlag(uint32_t flag);
+
 // --------------------------------------------------------------------------------------------------------------------
 
 // TODO: Make this part of g_saveData

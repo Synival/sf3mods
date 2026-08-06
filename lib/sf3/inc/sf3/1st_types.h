@@ -66,4 +66,15 @@ typedef struct _fadeColorSetting_t {
 
 // --------------------------------------------------------------------------------------------------------------------
 
+typedef struct _interactable_t {
+    int16_t trigger;
+    uint8_t triggerFlags;
+    uint8_t triggerTargetId;
+    int16_t flagChecked;
+    int16_t padding_0x06;
+    uint32_t action;
+} interactable_t;
+
+// --------------------------------------------------------------------------------------------------------------------
+
 #endif // #ifndef INCLUDED_1ST_TYPES_H

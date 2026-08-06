@@ -27,4 +27,6 @@ _memcpy                          = 0x0601fa08;
 
 _g_buttonsDown                   = 0x0601fc48;
 _g_bufferedButtonsDown           = 0x0601fc4a;
+_g_interactableTablePtr          = 0x060220f0;
 _g_cameraPos                     = 0x06022110;
+_g_messageId                     = 0x06022144;
