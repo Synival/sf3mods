@@ -8,4 +8,6 @@ _endScene             = 0x06028b3c;
 _getGameFlag          = 0x06028c5c;
 
 /* TODO: should instead be accessed via the pointer to save data, with a struct! */
+_g_subLoadingId       = 0x0602f0b2;
+/* TODO: should instead be accessed via the pointer to save data, with a struct! */
 _g_saveDataMpdFileId  = 0x0602f0ba;
