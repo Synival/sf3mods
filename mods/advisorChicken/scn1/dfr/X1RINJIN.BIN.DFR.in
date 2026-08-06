@@ -1,11 +1,8 @@
 ; Don't render dynamic model instances -- we're going to replace that entire function.
-; TODO: where is it here??
-; 01c78,490b,0009
+01f74,490b,0009
 
 ; Update the post-load start function to a new one that loads the chicken
-; TODO: where is it here??
-; 00038,0605f148,06060964
+00038,0605f164,06060c60
 
 ; New code
-; TODO: where is it here?? how big??
-; { elf=x1rinjin.elf section=.newCode offset=0x1964 length=0x19c }
+{ elf=x1rinjin.elf section=.newCode offset=0x1c60 length=0x19c }

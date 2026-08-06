@@ -10,6 +10,7 @@ _c_scriptMakeSolidUnpushable = 0x06061340;
 
 SECTIONS
 {
+    /* Replace renderDynamicModelInstanceGroup() */
     . = 0x06060964;
 
     .newCode : {

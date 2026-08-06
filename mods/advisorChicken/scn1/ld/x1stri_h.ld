@@ -4,13 +4,14 @@ INCLUDE "x008_extern.ld"
 INCLUDE "x022_extern.ld"
 
 /* Functions in X1STRI_H.BIN */
-_originalStartFunction       = 0; /* 0x0605f148 */
-_talkToAdvisor               = 0; /* 0x0605fbbc */
-_c_scriptMakeSolidUnpushable = 0; /* 0x06061340 */
+_originalStartFunction       = 0x0605f1e8;
+_talkToAdvisor               = 0x0605f81c;
+_c_scriptMakeSolidUnpushable = 0x0606119c;
 
 SECTIONS
 {
-    . = 0; /* 0x06060964; */
+    /* Replace renderDynamicModelInstanceGroup() */
+    . = 0x06060254;
 
     .newCode : {
         KEEP(*(.newStartFunction));

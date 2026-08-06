@@ -48,12 +48,20 @@ static npc_t c_newNpcTable[2] = {
 
 [[gnu::section(".newStartFunction")]]
 int32_t newStartFunction() {
-    // Initialize a chicken if 1) no Dantares and 2) we haven't beaten the Tower yet.
+    // Run the original function, which might set up an interactable table or initialize sprites.
+    auto const rval = originalStartFunction();
+
+    // Initialize a chicken if 1) no Dantares...
+    auto loadCondition = !getGameFlag(0x04);
+    // 2) we haven't beaten the Tower yet (no Palsis)...
 #if ADVISOR_CHICKEN_CHECK_FOR_PALSIS
-    if (!getGameFlag(0x04) && !getGameFlag(0x396)) {
-#else
-    if (!getGameFlag(0x04)) {
+    // and 3) we're the right sub-loading Id (Storich check for X1STRI_H.BIN)
+    loadCondition = loadCondition && !getGameFlag(0x396);
 #endif
+#ifdef ADVISOR_CHICKEN_CHECK_FOR_SUB_LOADING_ID
+    loadCondition = loadCondition && g_subLoadingId == ADVISOR_CHICKEN_CHECK_FOR_SUB_LOADING_ID;
+#endif
+    if (loadCondition) {
         loadNpcs(c_newNpcTable, c_chickenCharId);
 
         // SF3 only has one interactable table, so we're just going to hijack Dantares.
@@ -69,7 +77,7 @@ int32_t newStartFunction() {
         }
     }
 
-    return originalStartFunction();
+    return rval;
 }
 
 // --------------------------------------------------------------------------------------------------------------------
