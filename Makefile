@@ -28,6 +28,7 @@ MODS := $(notdir $(wildcard $(MOD_PATH)/*))
 # Otherwise, specify the .?.o file(s) required. The build folder prefix will automatically be added.
 
 addLevelUpAnimation_OBJS_x014 = $(MOD_SCN_OBJS)
+advisorChicken_OBJS_x1aspi_h  = $(MOD_SCN_OBJS)
 compressAniTables_OBJS_x014   = $(MOD_SCN_OBJS)
 modernizedCamera_OBJS_x014    = $(MOD_SCN_OBJS)
 modernizedLighting_OBJS_x014  = $(MOD_SCN_OBJS)

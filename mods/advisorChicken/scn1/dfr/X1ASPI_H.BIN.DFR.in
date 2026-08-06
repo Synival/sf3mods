@@ -1,0 +1,8 @@
+; Don't render dynamic model instances -- we're going to replace that entire function.
+01c78,490b,0009
+
+; Update the post-load start function to a new one that loads the chicken
+00038,0605f148,06060964
+
+; New code
+{ elf=x1aspi_h.elf section=.newCode offset=0x1964 length=0x19c }
