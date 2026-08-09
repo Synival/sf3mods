@@ -33,7 +33,7 @@ extern uint16_t getRandomUShort();
 
 extern int32_t loadPartialFileToAddrWithoutCallback(int32_t fileId, void *toAddr, int32_t chunkPos, int32_t chunkSize);
 
-extern void setColorFadeTransition(uint32_t fadeBitmask, int16_t fadeDuration, fadeColorSetting_t *fadeColor);
+extern void setColorFadeTransition(uint32_t fadeBitmask, int16_t fadeDuration, const fadeColorSetting_t *fadeColor);
 extern void resetColorFadeTransition(uint32_t fadeBitmask, int16_t fadeDuration);
 
 extern void addIntJob(voidFunc_f *func, uint16_t orderAndType);
@@ -43,6 +43,11 @@ extern void pushGbrMatrix();
 extern void popGbrMatrix();
 extern void translateGbrMatrix(FIXED x, FIXED y, FIXED z);
 extern void rotateGbrMatrixY(FIXED rotY);
+
+extern int32_t writeDebugStr(const char *str, const uint16_t *coords);
+extern int32_t writeDebugUIntWithoutZeroes(uint32_t value, const uint16_t *coords);
+extern uint32_t hexToDec(uint32_t value);
+extern uint16_t *getDebugTextCoords(int x, int y);
 
 #if SCENARIO == 1 || SCENARIO == 2
 // Something necessary for button buffering
@@ -54,7 +59,7 @@ extern void someBufferedButtonsFunc();
 extern volatile controllerButton_e16 g_buttonsDown;
 extern volatile controllerButton_e16 g_bufferedButtonsDown;
 
-extern int g_messageId;
+extern int32_t g_messageId;
 extern interactable_t *g_interactableTablePtr;
 
 // --------------------------------------------------------------------------------------------------------------------
