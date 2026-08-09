@@ -1,6 +1,28 @@
-#include "sf3/common.h"
+#include <sf3/1st.h>
+
+#include <sf3/common.h>
 
 #include <stdint.h>
+
+// --------------------------------------------------------------------------------------------------------------------
+
+inline uint16_t *_getDebugTextCoords(int32_t x, int32_t y) {
+    return (uint16_t *)(x * 2 + y * 0x80 + 0x25e58000);
+}
+
+// --------------------------------------------------------------------------------------------------------------------
+
+[[gnu::section(".newDebugWriteStaExpEnd")]]
+void debugWriteStaExpEnd(int32_t what, uint32_t value) {
+    if (what > 2)
+        what = 2;
+
+    int32_t y = 10 + what;
+    const char *str = (const char *)(void *)(0x60886a0 + what * 4);
+
+    writeDebugUIntWithoutZeroes(hexToDec(value), _getDebugTextCoords(-2, y));
+    writeDebugStr(str, _getDebugTextCoords(1, y));
+}
 
 // --------------------------------------------------------------------------------------------------------------------
 

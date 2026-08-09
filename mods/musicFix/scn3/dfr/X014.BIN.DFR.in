@@ -1,0 +1,13 @@
+; Some random function is being hijacked to also call unassign_all_voices().
+; This is just after a wait_frames(2) call, at which time the SCSP shouldn't
+; be processing any new sequence events or processing any commands from SGL.
+;
+; Call a function that's been placed where a debug write function used to be.
+
+1c68,06015018,06088700
+
+; Dummy-out the debug write function.
+{ elf=x014.elf section=.newDebugWriteStaExpEndSection offset=0x6ac length=0x54 }
+
+; Write the new code in its place (immediately after `rts, nop`).
+{ elf=x014.elf section=.newCode offset=0x700 length=0x20 }

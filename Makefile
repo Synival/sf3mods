@@ -38,9 +38,7 @@ advisorChicken_OBJS_x1stri_h  = x1stri_h.c.o
 advisorChicken_OBJS_x1rinjin  = x1rinjin.c.o
 advisorChicken_OBJS_x1obhonj  = x1obhonj.c.o
 
-# TODO: musicFix project is WIP! The whole thing really needs to be in better shape,
-#       especially to prepare for a PD fix.
-musicFix_OBJS_x001_scn3       = scspMuter.c.o
+musicFix_OBJS_x014_scn3       = scspMuter.c.o
 
 # ---------------
 # | Build Flags |

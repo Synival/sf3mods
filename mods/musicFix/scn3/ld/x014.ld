@@ -1,8 +1,15 @@
+INCLUDE "1st.ld"
+
 SECTIONS
 {
-    . = 0x060f64b4;
+    . = 0x060886ac;
+    .newDebugWriteStaExpEndSection : {
+        KEEP(*(.newDebugWriteStaExpEnd))
+        . = ALIGN(2);
+    }
 
-    .patch : {
+    . = 0x06088700;
+    .newCode : {
         KEEP(*(.new_FUN_06015018_call))
         *(.text .text.*)
         . = ALIGN(4);

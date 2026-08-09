@@ -1,0 +1,9 @@
+; Updates the sound engine 'pause' command (0xF6).
+;
+; Changes it from:
+;    "set volume of channel 0 to 1 (muted but not off)"
+; to:
+;    "pause channel 0"
+; This is in line with how Scenario 2 works.
+
+edbc,8d02e600a0e50009d0430529400be400e101a0de,8d01e400a0e5d002400be901a0e1289206017d34
