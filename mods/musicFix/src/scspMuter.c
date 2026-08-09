@@ -6,6 +6,7 @@
 
 // --------------------------------------------------------------------------------------------------------------------
 
+// Making this inline shrinks the functions we're replacing by just enough bytes for the new stuff!
 inline uint16_t *_getDebugTextCoords(int32_t x, int32_t y) {
     return (uint16_t *)(x * 2 + y * 0x80 + 0x25e58000);
 }
@@ -29,7 +30,7 @@ void debugWriteStaExpEnd(int32_t what, uint32_t value) {
 [[gnu::section(".new_FUN_06015018_call")]]
 uint32_t new_FUN_06015018_call() {
     // Unassign all voices on the SCSP.
-    volatile uint32_t *ptr = (volatile uint32_t *)0x25A09C08;
+    volatile uint32_t *ptr = (volatile uint32_t *)(0x25a09c08);
     for (int i = 0; i < 32; ++i) {
         *ptr = 0;
         ptr += 3; 

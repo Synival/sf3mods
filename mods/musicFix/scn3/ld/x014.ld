@@ -11,6 +11,7 @@ SECTIONS
     . = 0x06088700;
     .newCode : {
         KEEP(*(.new_FUN_06015018_call))
+        . = ALIGN(4);
         *(.text .text.*)
         . = ALIGN(4);
         *(.rodata .rodata.*)
