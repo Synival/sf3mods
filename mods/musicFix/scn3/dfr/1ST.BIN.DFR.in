@@ -1,3 +1,17 @@
+; Optimized versions of the "catastrophic error" functions:
+{ elf=1stChanges.elf section=.newCatastrophicErrorCode offset=0xc55c length=0x190 }
+
+; Point catastrophic error functions to new locations
+0c830,06010610,0601057c ; GENERAL UNDEFINED INSTRUCTION
+0c834,06010664,0601058c ; SLOT UNDEFINED INSTRUCTION
+0c838,0601056c,0601055c ; ADDRESS ERROR
+0c83c,060105b8,0601056c ; DMA ADDRESS ERROR
+0c840,060106b4,0601059c ; MATRIX PUSH-POP ERROR
+
+; New code jumped to in X007. Runs F2 (cut volume) then F6 (pause)
+; (can't reach 0xc6ec)
+{ elf=1stChanges.elf section=.newPreBattleMusicCmdsSection offset=0xc6cc max_length=0x20 replace_zeroes }
+
 ; Updates the sound engine 'pause' command (0xF6).
 ;
 ; Changes it from:
@@ -6,4 +20,4 @@
 ;    "pause channel 0"
 ; This is in line with how Scenario 2 works.
 
-edbc,8d02e600a0e50009d0430529400be400e101a0de,8d01e400a0e5d002400be901a0e1289206017d34
+{ elf=1stChanges.elf section=.newRunMusicCommand offset=0xe93c length=0x6bc exact_fit }

@@ -1,0 +1,10 @@
+; Mimicing Scn1 beginning of combat
+6414,943c,    0009     ; commented out for now -- did move 0x00F2 into r4, but now not necessary since the next jsr was hijacked.
+64dc,060128e8,060106cc ; jump to our code (runs F2 then F6) instead of running queueAudioCommand()
+
+; Mimicing Scn1 end of combat
+6658,00f2,00fb   ; Restore previous audio track
+665a,00fb,00f7   ; Stop BG SFX1
+665c,00fc,00fb   ; Stop BG SFX2
+665e,00fd,00fd   ; Stop non-BG SFX (unchanged)
+6664,00f9,00f3   ; Restore music volume

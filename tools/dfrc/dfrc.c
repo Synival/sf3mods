@@ -19,7 +19,9 @@ typedef struct _dfr_action_t {
     int offset;
     int min_length;
     int max_length;
+
     bool replace_zeroes;
+    bool exact_fit;
 } dfr_action_t;
 
 // --------------------------------------------------------------------------------------------------------------------
@@ -260,6 +262,8 @@ bool dfr_action_init(dfr_action_t *action, const char *line) {
         }
         else if (strcmp(left, "replace_zeroes") == 0)
             action->replace_zeroes = true;
+        else if (strcmp(left, "exact_fit") == 0)
+            action->exact_fit = true;
         else {
             fprintf(stderr, "unknown action parameter '%s'\n", left);
             dfr_action_deinit(action);
@@ -312,6 +316,21 @@ bool print_new_dfr_patch(
             dfr_in_line, action->elf_section, bin_remaining);
         rval = false;
         goto error_quit;
+    }
+
+    // If an exact fit was requested, run additional checks.
+    if (action->exact_fit) {
+        if (action->min_length != action->max_length || action->min_length == 0) {
+            fprintf(stderr, "%s: must specify 'length' or same 'min/max_length' for 'exact_fit'\n", dfr_in_line);
+            rval = false;
+            goto error_quit;
+        }
+        else if (bin_remaining != action->min_length) {
+            fprintf(stderr, "%s: length required for 'exact_fit' is 0x%x bytes, but section is 0x%x bytes\n",
+                dfr_in_line, action->min_length, bin_remaining);
+            rval = false;
+            goto error_quit;
+        }
     }
 
     // Make sure to always read at least 'min_length' bytes.

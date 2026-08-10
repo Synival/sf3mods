@@ -130,7 +130,8 @@ typedef struct _polyChar_scn1_t {
     // 0x10c bytes
 } polyChar_scn1_t;
 
-typedef struct _polyChar_pd_t {
+// TODO: Are Scn3 + PD the same?
+typedef struct _polyChar_scn3_t {
     // Not all of this is known, and not all of this has been entered yet out of laziness.
     uint8_t notYetDefined1[0x20];
 
@@ -148,12 +149,12 @@ typedef struct _polyChar_pd_t {
 
     // (offset is now 0x48)
     uint8_t notYetDefined3[0x178];
-} polyChar_pd_t;
+} polyChar_scn3_t;
 
 #if SCENARIO == 1
 typedef polyChar_scn1_t polyChar_t;
-#elif SCENARIO == 4
-typedef polyChar_pd_t polyChar_t;
+#elif SCENARIO >= 3
+typedef polyChar_scn3_t polyChar_t;
 #endif
 
 typedef struct _camera_t {

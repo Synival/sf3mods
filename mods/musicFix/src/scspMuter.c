@@ -37,5 +37,5 @@ uint32_t new_FUN_06015018_call() {
     }
 
     // Call the function we were supposed to call (whatever it is).
-    return ((uint32_t (*)()) 0x06015018)();
+    return maybeSomeDspSetup();
 }

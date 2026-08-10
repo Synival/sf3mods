@@ -1,0 +1,29 @@
+; Optimized versions of the "catastrophic error" functions:
+{ elf=1stChanges.elf section=.newCatastrophicErrorCode offset=0xc55c length=0x190 }
+
+; Point catastrophic error functions to new locations
+0c830,06010610,0601057c ; GENERAL UNDEFINED INSTRUCTION
+0c834,06010664,0601058c ; SLOT UNDEFINED INSTRUCTION
+0c838,0601056c,0601055c ; ADDRESS ERROR
+0c83c,060105b8,0601056c ; DMA ADDRESS ERROR
+0c840,060106b4,0601059c ; MATRIX PUSH-POP ERROR
+
+; Moved queueAudioCommand() into that space so runMusicCommand() below it has more room.
+0c678,00000000000000000000000000000000,d10ee2012122911734178907d10c6112
+0c688,00000000000000000000000000000000,3410890dd30bd10ca0036232d30b6232
+0c698,00000000000000000000000000000000,d10b60234008014660237001c9072302
+0c6a8,00000000000000000000000000000000,d202e100000b221200ff000006023894
+0c6b8,00000000000000000000000000000000,0602382006023844060238500602384c
+0c6c8,00000000                        ,06023870
+
+; New code jumped to in X007. Runs F2 (cut volume) then F6 (pause)
+; (can't reach 0xc6ec)
+{ elf=1stChanges.elf section=.newPreBattleMusicCmdsSection offset=0xc6cc max_length=0x20 replace_zeroes }
+
+; Original queueAudioCommand() entry point. Jump immediately to the moved code.
+0e8e8,d10ee2012122911734178907,d101412b0009000006010678
+
+; Copy scenario 3 runMusicCommand to the new expanded space
+; It is still called at 0x0601293c (offset=0x0e93c)
+; The patch too the scenario 3 music function is present.
+{ elf=1stChanges.elf section=.newRunMusicCommand offset=0xe8f4 length=0x6d8 }

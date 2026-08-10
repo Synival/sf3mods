@@ -39,6 +39,19 @@ advisorChicken_OBJS_x1rinjin  = x1rinjin.c.o
 advisorChicken_OBJS_x1obhonj  = x1obhonj.c.o
 
 musicFix_OBJS_x014_scn3       = scspMuter.c.o
+musicFix_OBJS_1stChanges_scn3 = \
+    newCatastrophicError.S.o \
+    catastrophicErrorReplacements.c.o \
+    scn3RunMusicCommand.S.o \
+    newPreBattleMusicCmds.S.o \
+    gainLevelJingleFix.c.o
+musicFix_OBJS_x014_pd         = scspMuter.c.o
+musicFix_OBJS_1stChanges_pd   = \
+    newCatastrophicError.S.o \
+    catastrophicErrorReplacements.c.o \
+    scn3RunMusicCommand.S.o \
+    newPreBattleMusicCmds.S.o \
+    gainLevelJingleFix.c.o
 
 # ---------------
 # | Build Flags |

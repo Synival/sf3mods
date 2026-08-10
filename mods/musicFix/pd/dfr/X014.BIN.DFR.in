@@ -1,0 +1,19 @@
+; Some random function is being hijacked to also call unassign_all_voices().
+; This is just after a wait_frames(2) call, at which time the SCSP shouldn't
+; be processing any new sequence events or processing any commands from SGL.
+;
+; Call a function that's been placed where a debug write function used to be.
+
+01d70,06014fec,06088784
+
+; Replace the debug "write sta/exp/end" function with a more optimized one.
+{ elf=x014.elf section=.newDebugWriteStaExpEndSection offset=0x730 length=0x54 }
+
+; Write the SCSP patch code immediately after it.
+{ elf=x014.elf section=.newCode offset=0x784 length=0x20 }
+
+; Don't stop music (command F0) when gaining a level in battle.
+056c0,4d0b,0009
+
+; Swap out wait function in level gain function to 1) wait and 2) convert "gain level jingle" to a normal track.
+057c0,0608d9c0,060105e0

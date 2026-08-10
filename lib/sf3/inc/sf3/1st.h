@@ -25,6 +25,8 @@ extern void getCoordInGbrMatrixSpace(FIXED x, FIXED y, FIXED z, VECTOR *vecOut);
 extern void getCoordInGbrMatrixSpace(const VECTOR *vecIn, VECTOR *vecOut);
 #endif
 
+extern uint32_t maybeSomeDspSetup();
+
 extern void queueAudioCommand(audioCommand_e32 cmd);
 
 extern void waitFrames(int frames);
@@ -61,6 +63,9 @@ extern volatile controllerButton_e16 g_bufferedButtonsDown;
 
 extern int32_t g_messageId;
 extern interactable_t *g_interactableTablePtr;
+
+extern int g_isPlayingJingle;
+extern int g_stopChannel1AndResumeChannel0Timer;
 
 // --------------------------------------------------------------------------------------------------------------------
 
