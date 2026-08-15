@@ -704,7 +704,6 @@ label_06012dc4:
 // Do nothing if already paused.
     bt         perform_pause
     bra        move_to_next_music_command_and_finish
-    nop
 // Run PAUSE command.
 perform_pause:
     mov.l      z_func_soundCommand_PAUSE,r0
@@ -720,6 +719,9 @@ perform_pause:
 z_func_soundCommand_PAUSE:
     .long _soundCommand_PAUSE
 
+// (need some junk to also be exactly 22 bytes)
+    .word 0x0000
+
 #endif
 
 label_06012dd2:
@@ -733,7 +735,11 @@ label_06012dd2:
     jsr        @r0
     movt       r4
     mov.l      d_var_g_stopChannel1AndResumeChannel0Timer,r2
+#if USE_UNCHANGED_SCN3_RUN_MUSIC_COMMAND_BEHAVIOR
     mov        #0x1e,r1
+#else
+    mov        #0x19,r1
+#endif
     mov.l      r1,@r2
     mov.l      d_var_g_isPlayingJingle,r2
     mov        #0x0,r1
