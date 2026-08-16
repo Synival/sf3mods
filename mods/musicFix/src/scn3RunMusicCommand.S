@@ -706,13 +706,13 @@ label_06012dc4:
     bra        move_to_next_music_command_and_finish
 // Run PAUSE command.
 perform_pause:
+    mov        #1,r9
     mov.l      z_func_soundCommand_PAUSE,r0
     jsr        @r0
     mov        #0,r4
 // Set g_isPaused to 1 and finish.
-    mov        #1,r0
     bra        move_to_next_music_command_and_finish
-    mov.l      r0,@r8
+    mov.l      r9,@r8
 
 // Data.
 .balign 4
