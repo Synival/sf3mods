@@ -61,8 +61,10 @@ extern polyChar_t *g_polyCharVictim;
 extern bool        g_flipPolyChars;
 extern animId_e16  g_attackerAnimId;
 
+#if SCENARIO == 1
 extern camera_t    g_camera;
 extern VECTOR      g_cameraPos;
+#endif
 
 extern spellId_e16 g_attackerSpellId_X014;
 extern short       g_attackerSpecialId_X014;

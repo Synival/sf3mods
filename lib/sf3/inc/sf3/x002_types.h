@@ -5,6 +5,8 @@
 
 #include "common.h"
 
+#include <stddef.h>
+
 // --------------------------------------------------------------------------------------------------------------------
 
 typedef struct _battleUnitState_t {
@@ -49,6 +51,14 @@ typedef struct _battleUnitState_t {
     uint8_t lastAttacker;
 } battleUnitState_t;
 
+static_assert(sizeof(battleUnitState_t) == 0x30);
+
+typedef struct _weaponInfo_t {
+    int8_t weaponType;
+    int8_t weaponLevel;
+    int16_t wexp;
+} weaponInfo_t;
+
 typedef struct _battleUnit_t {
     uint8_t           turnsUntilRespawn;     // 0x00
     uint8_t           turnsTaken;            // 0x01
@@ -88,7 +98,7 @@ typedef struct _battleUnit_t {
     uint8_t           attackChoiceMode;
     uint8_t           attackChoices[6];
     uint8_t           weaponEqTypes[8];
-    uint32_t          weaponLevels[4];
+    weaponInfo_t      weaponLevels[4];
     uint8_t           unknown0x72;
     uint8_t           unknown0x73;
     uint32_t          aiState_t;
@@ -101,6 +111,15 @@ typedef struct _battleUnit_t {
     uint8_t           unknown0x7f;
     battleUnitState_t state;
 } battleUnit_t;
+
+static_assert(offsetof(battleUnit_t, unknown0x42)    == 0x42);
+static_assert(offsetof(battleUnit_t, attackChoices)  == 0x54);
+static_assert(offsetof(battleUnit_t, weaponEqTypes)  == 0x5a);
+static_assert(offsetof(battleUnit_t, weaponLevels)   == 0x62);
+static_assert(offsetof(battleUnit_t, unknown0x72)    == 0x72);
+static_assert(offsetof(battleUnit_t, enemyOrClassId) == 0x78);
+static_assert(offsetof(battleUnit_t, state)          == 0x80);
+static_assert(sizeof(battleUnit_t) == 0xb0);
 
 typedef struct _item_t {
     uint16_t price;
@@ -117,6 +136,8 @@ typedef struct _item_t {
     uint8_t  useSpellId;
     uint8_t  useSpellLevel;
 } item_t;
+
+static_assert(sizeof(item_t) == 0x18);
 
 // --------------------------------------------------------------------------------------------------------------------
 

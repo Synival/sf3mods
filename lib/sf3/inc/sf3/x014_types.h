@@ -5,6 +5,8 @@
 
 #include "common.h"
 
+#include <stddef.h>
+
 // --------------------------------------------------------------------------------------------------------------------
 
 enum {
@@ -130,6 +132,12 @@ typedef struct _polyChar_scn1_t {
     // 0x10c bytes
 } polyChar_scn1_t;
 
+static_assert(offsetof(polyChar_scn1_t, battleId)            == 0x44);
+static_assert(offsetof(polyChar_scn1_t, animId)              == 0x66);
+static_assert(offsetof(polyChar_scn1_t, boundingBoxHalfSize) == 0x78);
+static_assert(offsetof(polyChar_scn1_t, inAttackAnimation)   == 0xe0);
+static_assert(sizeof(polyChar_scn1_t) == 0x10c);
+
 // TODO: Are Scn3 + PD the same?
 typedef struct _polyChar_scn3_t {
     // Not all of this is known, and not all of this has been entered yet out of laziness.
@@ -148,8 +156,15 @@ typedef struct _polyChar_scn3_t {
     uint16_t battleModelId;
 
     // (offset is now 0x48)
-    uint8_t notYetDefined3[0x178];
+    uint8_t notYetDefined3[0x130];
+
+    // 0x178 bytes
 } polyChar_scn3_t;
+
+static_assert(offsetof(polyChar_scn3_t, pos)            == 0x20);
+static_assert(offsetof(polyChar_scn3_t, notYetDefined2) == 0x3e);
+static_assert(offsetof(polyChar_scn3_t, battleId)       == 0x44);
+static_assert(sizeof(polyChar_scn3_t) == 0x178);
 
 #if SCENARIO == 1
 typedef polyChar_scn1_t polyChar_t;
@@ -157,7 +172,7 @@ typedef polyChar_scn1_t polyChar_t;
 typedef polyChar_scn3_t polyChar_t;
 #endif
 
-typedef struct _camera_t {
+typedef struct _camera_scn1_t {
     ANGLES        rot;
     uint8_t       padding_0x06[2];
     FIXED         zOffset;
@@ -173,7 +188,13 @@ typedef struct _camera_t {
     int16_t       shakeMode;
     uint8_t       padding_0x026[2];
     FIXED         shakeMode3Amount;
-} camera_t;
+} camera_scn1_t;
+
+static_assert(sizeof(camera_scn1_t) == 0x2c);
+
+#if SCENARIO == 1
+typedef camera_scn1_t camera_t;
+#endif
 
 typedef struct _battleSceneInfo_t {
     uint16_t mpdFileId;
@@ -199,6 +220,8 @@ typedef struct _sprEff_t {
     int32_t moveDistPerFrame; // 0x4c
     int32_t maybeSize;        // 0x50
 } sprEff_t;
+
+static_assert(sizeof(sprEff_t) == 0x54);
 
 // TODO: actually add these types.
 typedef struct _pcFunc_t pcFunc_t;
