@@ -32,6 +32,7 @@ compressAniTables_OBJS_x014   = $(MOD_SCN_OBJS)
 modernizedCamera_OBJS_x014    = $(MOD_SCN_OBJS)
 modernizedLighting_OBJS_x014  = $(MOD_SCN_OBJS)
 musicDebugger_OBJS_x001       = $(MOD_SCN_OBJS)
+antidoteLv3_4_OBJS_x013changes = $(MOD_SCN_OBJS)
 
 advisorChicken_OBJS_x1aspi_h  = x1aspi_h.c.o
 advisorChicken_OBJS_x1stri_h  = x1stri_h.c.o
