@@ -17,8 +17,12 @@ typedef struct _dfr_action_t {
     bool elf_section_owned;
 
     int offset;
+
     int min_length;
     int max_length;
+
+    int min_until;
+    int max_until;
 
     bool replace_zeroes;
     bool exact_fit;
@@ -260,6 +264,14 @@ bool dfr_action_init(dfr_action_t *action, const char *line) {
             action->min_length = abs(strtol(right, nullptr, 0));
             action->max_length = action->min_length;
         }
+        else if (strcmp(left, "min_until") == 0)
+            action->min_until = abs(strtol(right, nullptr, 0));
+        else if (strcmp(left, "max_until") == 0)
+            action->max_until = abs(strtol(right, nullptr, 0));
+        else if (strcmp(left, "until") == 0) {
+            action->min_until = abs(strtol(right, nullptr, 0));
+            action->max_until = action->min_until;
+        }
         else if (strcmp(left, "replace_zeroes") == 0)
             action->replace_zeroes = true;
         else if (strcmp(left, "exact_fit") == 0)
@@ -310,31 +322,61 @@ bool print_new_dfr_patch(
     int bin_remaining = section.size;
     const uint8_t *bin_data = section.data;
 
+    int min_length = action->min_length;
+    int max_length = action->max_length;
+    int min_until  = action->min_until;
+    int max_until  = action->max_until;
+
+    // Synchronize min/max length+until.
+    if (min_length == 0 && min_until != 0)
+        min_length = min_until - action->offset;
+    else if (min_length != 0 && min_until == 0)
+        min_until = min_length + action->offset;
+
+    if (max_length == 0 && max_until != 0)
+        max_length = max_until - action->offset;
+    else if (max_length != 0 && max_until == 0)
+        max_until = max_length + action->offset;
+
+    // Don't allow length/until conflicts.
+    if (!(min_length == 0 && min_until == 0) && min_length != min_until - action->offset) {
+        fprintf(stderr, "%s: min_length (0x%x) doesn't correspond to min_until (0x%x)\n",
+            dfr_in_line, min_length, min_until);
+        rval = false;
+        goto error_quit;
+    }
+    if (!(max_length == 0 && max_until == 0) && max_length != max_until - action->offset) {
+        fprintf(stderr, "%s: max_length (0x%x) doesn't correspond to max_until (0x%x)\n",
+            dfr_in_line, max_length, max_until);
+        rval = false;
+        goto error_quit;
+    }
+
     // Use the entire binary data length or, if provided, the max length.
-    if (action->max_length > 0 && bin_remaining > action->max_length) {
-        fprintf(stderr, "%s: section '%s' size (0x%x bytes) exceeded max_length\n",
-            dfr_in_line, action->elf_section, bin_remaining);
+    if (max_length > 0 && bin_remaining > max_length) {
+        fprintf(stderr, "%s: section '%s' size (0x%x bytes) exceeded max_length (0x%x)\n",
+            dfr_in_line, action->elf_section, bin_remaining, max_length);
         rval = false;
         goto error_quit;
     }
 
     // If an exact fit was requested, run additional checks.
     if (action->exact_fit) {
-        if (action->min_length != action->max_length || action->min_length == 0) {
+        if (min_length != max_length || min_length == 0) {
             fprintf(stderr, "%s: must specify 'length' or same 'min/max_length' for 'exact_fit'\n", dfr_in_line);
             rval = false;
             goto error_quit;
         }
-        else if (bin_remaining != action->min_length) {
+        else if (bin_remaining != min_length) {
             fprintf(stderr, "%s: length required for 'exact_fit' is 0x%x bytes, but section is 0x%x bytes\n",
-                dfr_in_line, action->min_length, bin_remaining);
+                dfr_in_line, min_length, bin_remaining);
             rval = false;
             goto error_quit;
         }
     }
 
     // Make sure to always read at least 'min_length' bytes.
-    int length = max_int(action->min_length, bin_remaining);
+    int length = max_int(min_length, bin_remaining);
 
     for (; length > 0; length -= 0x10) {
         // Get original data.
