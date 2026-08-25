@@ -20,12 +20,12 @@ extern bool queueBCmd2(battleCmd_e16 cmd, int16_t arg1, int16_t arg2);
 extern bool queueBCmdMessageAlways(int16_t msg);
 extern bool queueBCmdMessageIfSettingOn(int16_t msg);
 
-extern bool applyAntidoteLv2(battleUnit_t *unit);
+extern bool applyAntidoteLv2(const battleUnit_t *unit);
 
 // --------------------------------------------------------------------------------------------------------------------
 
 extern int16_t g_spellToCastLevel;
-extern int32_t g_currentVictimBattleId;
+extern int32_t g_currentVictimUnitID;
 extern bool g_attackDodged;
 
 // --------------------------------------------------------------------------------------------------------------------
