@@ -1,0 +1,3 @@
+; Replace applyAntidote() with a newer, more compact version that also behaves differently.
+
+{ elf=x013changes.elf section=.newCode offset=0x503c until=0x5104 }

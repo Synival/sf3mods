@@ -3,8 +3,8 @@
 #include <sf3/x002.h>
 
 #if SCENARIO == 1
-    #define MSG_NO_LONGER_PARALYZED 0x000 // TODO: what is it?
-    #define MSG_NO_LONGER_POISONED  0x000 // TODO: what is it?
+    #define MSG_NO_LONGER_PARALYZED 0x7d0
+    #define MSG_NO_LONGER_POISONED  0x7d1
 #elif SCENARIO == 2
     #define MSG_NO_LONGER_PARALYZED 0x000 // TODO: what is it?
     #define MSG_NO_LONGER_POISONED  0x000 // TODO: what is it?
