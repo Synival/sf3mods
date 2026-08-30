@@ -23,8 +23,8 @@ typedef struct _musicDebugDialog_t {
 
 // --------------------------------------------------------------------------------------------------------------------
 
-void setCommand(int16_t cmd);
-void redrawCommand();
+static void setCommand(int16_t cmd);
+static void redrawCommand();
 
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -97,7 +97,7 @@ void musicDebugMenu() {
 
 // --------------------------------------------------------------------------------------------------------------------
 
-void setCommand(int16_t cmd) {
+static void setCommand(int16_t cmd) {
     if (cmd < 0)
         cmd = 0;
     if (cmd > 0x2ff)
@@ -110,7 +110,7 @@ void setCommand(int16_t cmd) {
 
 // --------------------------------------------------------------------------------------------------------------------
 
-void redrawCommand() {
+static void redrawCommand() {
     freeDialogSpritesInRect((dialogSpriteList_t *) (mdd.dialog), 100, 0x04, 160, 0x14);
     if (mdd.currentCmd < 0x100)
         writeHexValueToDialog(mdd.currentCmd, 2, mdd.dialog, 108, 0x04);

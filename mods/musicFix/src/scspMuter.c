@@ -7,7 +7,7 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 // Making this inline shrinks the functions we're replacing by just enough bytes for the new stuff!
-inline uint16_t *_getDebugTextCoords(int32_t x, int32_t y) {
+static inline uint16_t *_getDebugTextCoords(int32_t x, int32_t y) {
     return (uint16_t *)(x * 2 + y * 0x80 + 0x25e58000);
 }
 

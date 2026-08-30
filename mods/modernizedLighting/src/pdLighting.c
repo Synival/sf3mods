@@ -4,9 +4,10 @@
 
 // --------------------------------------------------------------------------------------------------------------------
 
-const battleSceneInfo_t *getBattleSceneInfoForMpdFile(uint16_t mpdFileId);
-palette0x20_t *getBattlePaletteById(uint8_t idx);
-void buildLightingPalette(palette0x20_t *palette, uint8_t low, uint8_t mid, uint8_t high, uint8_t midIdx, FIXED rTint, FIXED gTint, FIXED bTint);
+static const battleSceneInfo_t *getBattleSceneInfoForMpdFile(uint16_t mpdFileId);
+static palette0x20_t *getBattlePaletteById(uint8_t idx);
+static void buildLightingPalette(palette0x20_t *palette, uint8_t low, uint8_t mid, uint8_t high, uint8_t midIdx,
+    FIXED rTint, FIXED gTint, FIXED bTint);
 
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -67,7 +68,7 @@ alignas(4) static const palette0x20_t g_battlePaletteTable2[2] = {
 
 // --------------------------------------------------------------------------------------------------------------------
 
-const battleSceneInfo_t *getBattleSceneInfoForMpdFile(uint16_t mpdFileId) {
+static const battleSceneInfo_t *getBattleSceneInfoForMpdFile(uint16_t mpdFileId) {
   const battleSceneInfo_t *bsi;
 
   for (bsi = g_battleSceneInfos; bsi->mpdFileId != 0xFFFF; bsi++)
@@ -77,11 +78,17 @@ const battleSceneInfo_t *getBattleSceneInfoForMpdFile(uint16_t mpdFileId) {
   return g_battleSceneInfos;
 }
 
-palette0x20_t *getBattlePaletteById(uint8_t idx) {
+// --------------------------------------------------------------------------------------------------------------------
+
+static palette0x20_t *getBattlePaletteById(uint8_t idx) {
     return g_battlePaletteTable1[idx];
 }
 
-void buildLightingPalette(palette0x20_t *palette, uint8_t low, uint8_t mid, uint8_t high, uint8_t midIdx, FIXED rTint, FIXED gTint, FIXED bTint) {
+// --------------------------------------------------------------------------------------------------------------------
+
+static void buildLightingPalette(palette0x20_t *palette, uint8_t low, uint8_t mid, uint8_t high, uint8_t midIdx,
+    FIXED rTint, FIXED gTint, FIXED bTint)
+{
   uint8_t  aboveBase;
   uint8_t  base;
   uint8_t  v, i;
@@ -110,6 +117,8 @@ void buildLightingPalette(palette0x20_t *palette, uint8_t low, uint8_t mid, uint
   }
 }
 
+// --------------------------------------------------------------------------------------------------------------------
+
 [[gnu::section(".initLighting")]]
 void initLighting() {
     const battleSceneInfo_t *sceneInfo;
@@ -129,7 +138,8 @@ void initLighting() {
     palette_0x02 = getBattlePaletteById(0x02);
     palette_0x0f = getBattlePaletteById(0x0f);
 
-    memcpy(palette_0x02->colors, g_battlePaletteTable2[sceneInfo->lightingStyle & 1].colors, sizeof(palette_0x02->colors));
+    memcpy(palette_0x02->colors, g_battlePaletteTable2[sceneInfo->lightingStyle & 1].colors,
+        sizeof(palette_0x02->colors));
 
     uint16_t color = sceneInfo->color;
     FIXED r = ((color & 0x1f) + 1) << 11;

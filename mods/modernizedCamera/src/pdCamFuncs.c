@@ -32,7 +32,7 @@ alignas(4) static voidFunc_f *const g_cameraFuncTable[6] = {
 
 // --------------------------------------------------------------------------------------------------------------------
 
-weaponRange_e8 polyCharGetWeaponRange(polyChar_t *polyChar) {
+static weaponRange_e8 polyCharGetWeaponRange(polyChar_t *polyChar) {
     battleUnit_t *unit;
     item_t       *weapon;
     uint8_t       range;
