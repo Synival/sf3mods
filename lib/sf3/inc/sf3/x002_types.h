@@ -21,7 +21,7 @@ typedef struct _battleUnitState_t {
     uint8_t turns;
     uint8_t hpRegen;
     uint8_t mpRegen;
-    uint8_t magicRes[8];
+    int8_t magicRes[8];
     uint8_t exp;
     uint8_t controlType;
     uint8_t teamId;
