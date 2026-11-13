@@ -49,6 +49,12 @@ alignas(4) const uint16_t c_elementalWeapons[] = {
     0,
     0,
     0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
 
     // Must always end with zero
     0,
@@ -63,13 +69,13 @@ static const battleMap_t *g_battleMap = (void *) 0x060b6000;
 [[gnu::section(".multiplyDamageByWeaponElementPower")]]
 void multiplyDamageByWeaponElementPower(battleUnit_t *attacker, battleUnit_t *victim, int32_t *damage) {
     // Don't bother if there's no weapon.
-    const uint16_t weapon = attacker->weapon;
+    const uint16_t weapon = (attacker->weapon & 0x01FF) << 4;
     if (weapon == 0)
         return;
 
     // Is the weapon one of the elemental weapons?
     const uint16_t *ew = c_elementalWeapons;
-    while ((*ew >> 4) != weapon) 
+    while (*ew != weapon) 
         if (*(ew++) == 0)
             return;
 
