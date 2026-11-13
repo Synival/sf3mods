@@ -116,6 +116,75 @@ typedef uint32_t spellId_e32;
 
 // --------------------------------------------------------------------------------------------------------------------
 
+enum {
+    ELEMENT_EARTH   = 0,
+    ELEMENT_FIRE    = 1,
+    ELEMENT_ICE     = 2,
+    ELEMENT_SPARK   = 3,
+    ELEMENT_WIND    = 4,
+    ELEMENT_LIGHT   = 5,
+    ELEMENT_DARK    = 6,
+    ELEMENT_UNUSED  = 7,
+};
+
+typedef uint8_t  element_e8;
+typedef uint16_t element_e16;
+typedef uint32_t element_e32;
+
+// --------------------------------------------------------------------------------------------------------------------
+
+enum {
+    FBONUS_NONE                              =  0,
+    FBONUS_ATK                               =  1,
+    FBONUS_CRIT                              =  2,
+    FBONUS_MAGIC_POW                         =  3,
+    FBONUS_EXP                               =  4,
+    FBONUS_GOLD                              =  5,
+    FBONUS_ITEM_DROP                         =  6,
+    FBONUS_DEF                               =  7,
+    FBONUS_CRIT_DEF                          =  8,
+    FBONUS_DODGE                             =  9,
+    FBONUS_COUNTER                           = 10,
+    FBONUS_MAGIC_RES                         = 11,
+    FBONUS_DEBUFF_LUCK                       = 12,
+    FBONUS_DIVERT_ATTACK_BROKEN              = 13,
+    FBONUS_MAYBE_DEF_BUT_SAYS_MAGIC_RES_LUCK = 14,
+    FBONUS_COUNTER_MAGIC_RES                 = 15,
+    FBONUS_DODGE_LUCK                        = 16,
+    FBONUS_CRIT_COUNTER                      = 17,
+};
+
+typedef uint8_t  friendshipBonus_e8;
+typedef uint16_t friendshipBonus_e16;
+typedef uint32_t friendshipBonus_e32;
+
+// --------------------------------------------------------------------------------------------------------------------
+
+enum {
+    TERRAIN_NO_ENTRY       =  0,
+    TERRAIN_AIR            =  1,
+    TERRAIN_GRASSLAND      =  2,
+    TERRAIN_DIRT           =  3,
+    TERRAIN_DARK_GRASS     =  4,
+    TERRAIN_FOREST         =  5,
+    TERRAIN_BROWN_MOUNTAIN =  6,
+    TERRAIN_DESERT         =  7,
+    TERRAIN_GREY_MOUNTAIN  =  8,
+    TERRAIN_WATER          =  9,
+    TERRAIN_CANT_STAY      = 10,
+    TERRAIN_SAND           = 11,
+    TERRAIN_ENEMY_ONLY     = 12,
+    TERRAIN_PLAYER_ONLY    = 13,
+    TERRAIN_0x0E           = 14,
+    TERRAIN_0x0F           = 15,
+};
+
+typedef uint8_t  terrain_e8;
+typedef uint16_t terrain_e16;
+typedef uint32_t terrain_e32;
+
+// --------------------------------------------------------------------------------------------------------------------
+
 typedef struct _spellIdLevel_t {
     spellId_e8 spellId;
     int8_t level;
