@@ -6,9 +6,20 @@
 
 // --------------------------------------------------------------------------------------------------------------------
 
-#define ITEM_ID_WITH_ELEMENT(id, element) \
-    ((uint16_t) ((uint16_t) (id << 4) | (uint16_t) (element & 0x0F)))
+// Each item in the elemental weapon table is a 16-bit value with an item ID and an element.
+// The item ID is the upper 12 bits (0xFFF0).
+// The element is the lower 4 bits (0x000F).
 
+#define ITEM_ID_WITH_ELEMENT(id, element) \
+    ((uint16_t) ((uint16_t) ((id) << 4) | (uint16_t) ((element) & (uint16_t) 0x000F)))
+
+#define GET_ITEM_ID_FROM_ITEM_ELEMENT_PAIR(pair) \
+    ((uint16_t) ((uint16_t) (pair) >> 4))
+
+#define GET_ELEMENT_FROM_ITEM_ELEMENT_PAIR(pair) \
+    ((element_e8) ((uint16_t) (pair) & (uint16_t) 0x000F))
+
+// All elemental weapons defined here.
 alignas(4) const uint16_t c_elementalWeapons[] = {
     /* 1-10 */
     ITEM_ID_WITH_ELEMENT(0x078 /*Phoenix Sword*/, ELEMENT_FIRE),
@@ -57,7 +68,6 @@ alignas(4) const uint16_t c_elementalWeapons[] = {
     0,
     0,
 
-
     // Must always end with zero
     0,
 };
@@ -68,6 +78,9 @@ static const battleMap_t *g_battleMap = (void *) 0x060b6000;
 
 // --------------------------------------------------------------------------------------------------------------------
 
+// Detects if the attacker's weapon is an elemental one. If so, 50% of the victim's magic resistance to that element is
+// applied to the damage referenced. The result is a 50% boost for resistance of -100 and a 50% penalty for resistance
+// of +100.
 [[gnu::section(".multiplyDamageByWeaponElementPower")]]
 void multiplyDamageByWeaponElementPower(battleUnit_t *attacker, battleUnit_t *victim, int32_t *damage) {
     // Don't bother if there's no weapon.
@@ -77,18 +90,21 @@ void multiplyDamageByWeaponElementPower(battleUnit_t *attacker, battleUnit_t *vi
 
     // Is the weapon one of the elemental weapons?
     const uint16_t *ew = c_elementalWeapons;
-    while (*ew >> 4 != weapon) 
+    while (GET_ITEM_ID_FROM_ITEM_ELEMENT_PAIR(*ew) != weapon) 
         if (*(ew++) == 0)
             return;
 
     // Get and return the amount of damage the attack should do as a percentage.
-    element_e8 element = (element_e8) (*ew & 0x0F);
+    element_e8 element = GET_ELEMENT_FROM_ITEM_ELEMENT_PAIR(*ew);
     int32_t mult = 201 - victim->state.magicRes[element]; // (201 because 200 won't compile for reasons)
     *damage = (*damage * mult) / 201;
 }
 
 // --------------------------------------------------------------------------------------------------------------------
 
+// Original base damage formula modified to apply elemental power (if applicable).
+// Elemental power is applied to the base attack value (including partnership bonus) before defense, land effect, or
+// effectiveness bonuses are considered.
 [[gnu::section(".getBaseAttackDamage")]]
 int32_t getBaseAttackDamage(int32_t attackerId, int32_t victimId) {
   battleUnit_t *victim   = getUnit(victimId);
@@ -101,14 +117,18 @@ int32_t getBaseAttackDamage(int32_t attackerId, int32_t victimId) {
   int32_t defBonus = getCurrentFriendshipStatBoost(victimId, FBONUS_DEF);
   int32_t alsoDef  = getCurrentFriendshipStatBoost(victimId, FBONUS_MAYBE_DEF_BUT_SAYS_MAGIC_RES_LUCK);
 
+  // Calculate base attack and apply elemental bonuses if applicable.
   int32_t damage = atkBonus + atk;
   multiplyDamageByWeaponElementPower(attacker, victim, &damage); // New!
 
+  // Reduce base damage by enemy defense.:w
   damage -= (def + defBonus + alsoDef);
 
-  // Uhh, if you do the math here, land effect is scaled down from 15/30% to 10/20%. Lame!
+  // Time to apply land effect!
+  // If you do the math here, land effect is scaled down from 15/30% to 10/20%. Lame!
   terrain_e16 terrain = getTileTerrainType(g_battleMap, victim->x, victim->y);
 
+  // In Scenario 1, this function is in X012.BIN. From Scenario 2 onward, it's in X1*.BIN.
 #if SCENARIO == 1
   int32_t landEffectPercent = getLandEffectPercent(victimId, terrain); // 0, 15, or 30
 #else
@@ -116,9 +136,12 @@ int32_t getBaseAttackDamage(int32_t attackerId, int32_t victimId) {
 #endif
 
   damage = (damage * (10 - landEffectPercent / 0xf)) / 10;
+
+  // Make sure damage is capped.
   if (damage < 1)
     damage = 1;
 
+  // Add effectivenes bonuses last.
   int32_t effectivenessBonus = getAttackEffectivenessPower(attackerId, victimId);
   g_effectivenessBonus = (int8_t) effectivenessBonus;
 
