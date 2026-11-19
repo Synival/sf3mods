@@ -7,7 +7,9 @@
 
 // --------------------------------------------------------------------------------------------------------------------
 
-extern int32_t x1_getLandEffectPercent(int32_t battleId, terrain_e16);
+#if SCENARIO != 1
+extern int32_t x1_getLandEffectPercent(int32_t battleId, terrain_e16 terrainType);
+#endif
 
 // --------------------------------------------------------------------------------------------------------------------
 
