@@ -10,9 +10,19 @@
     ((uint16_t) ((uint16_t) (id << 4) | (uint16_t) (element & 0x0F)))
 
 alignas(4) const uint16_t c_elementalWeapons[] = {
+    /* 1-10 */
     ITEM_ID_WITH_ELEMENT(0x078 /*Phoenix Sword*/, ELEMENT_FIRE),
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
 
-    // For future use
+    /* 11-20 */
     0,
     0,
     0,
@@ -23,6 +33,8 @@ alignas(4) const uint16_t c_elementalWeapons[] = {
     0,
     0,
     0,
+
+    /* 21-30 */
     0,
     0,
     0,
@@ -33,6 +45,8 @@ alignas(4) const uint16_t c_elementalWeapons[] = {
     0,
     0,
     0,
+
+    /* 31-39 */
     0,
     0,
     0,
@@ -42,19 +56,7 @@ alignas(4) const uint16_t c_elementalWeapons[] = {
     0,
     0,
     0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
+
 
     // Must always end with zero
     0,
@@ -69,13 +71,13 @@ static const battleMap_t *g_battleMap = (void *) 0x060b6000;
 [[gnu::section(".multiplyDamageByWeaponElementPower")]]
 void multiplyDamageByWeaponElementPower(battleUnit_t *attacker, battleUnit_t *victim, int32_t *damage) {
     // Don't bother if there's no weapon.
-    const uint16_t weapon = (attacker->weapon & 0x01FF) << 4;
+    const uint16_t weapon = attacker->weapon & 0x01FF;
     if (weapon == 0)
         return;
 
     // Is the weapon one of the elemental weapons?
     const uint16_t *ew = c_elementalWeapons;
-    while (*ew != weapon) 
+    while (*ew >> 4 != weapon) 
         if (*(ew++) == 0)
             return;
 
@@ -106,7 +108,13 @@ int32_t getBaseAttackDamage(int32_t attackerId, int32_t victimId) {
 
   // Uhh, if you do the math here, land effect is scaled down from 15/30% to 10/20%. Lame!
   terrain_e16 terrain = getTileTerrainType(g_battleMap, victim->x, victim->y);
+
+#if SCENARIO == 1
+  int32_t landEffectPercent = getLandEffectPercent(victimId, terrain); // 0, 15, or 30
+#else
   int32_t landEffectPercent = x1_getLandEffectPercent(victimId, terrain); // 0, 15, or 30
+#endif
+
   damage = (damage * (10 - landEffectPercent / 0xf)) / 10;
   if (damage < 1)
     damage = 1;

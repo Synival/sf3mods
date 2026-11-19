@@ -1,0 +1,5 @@
+; Replace unused getHeightBonusProbablyDamagePercentBoost()
+{ elf=x013changes.elf section=.getHeightBonusProbablyDamagePercentBoost offset=0x1afc until=0x1ba8 }
+
+; New function to calculate base damage
+{ elf=x013changes.elf section=.getBaseAttackDamage offset=0x1fe0 until=0x20e0 }
