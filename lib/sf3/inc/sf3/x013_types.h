@@ -120,4 +120,13 @@ static_assert(sizeof(turnAction_t) == 0x88);
 
 // --------------------------------------------------------------------------------------------------------------------
 
+typedef struct _specialAttack_t {
+    uint8_t type;
+    uint8_t lowPow;
+    uint8_t midPow;
+    uint8_t highPow;
+} specialAttack_t;
+
+static_assert(sizeof(specialAttack_t) == 0x04);
+
 #endif // #ifndef INCLUDED_X013_TYPES_H

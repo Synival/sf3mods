@@ -10,9 +10,13 @@ _queueBCmdMessageAlways      = 0x060815c4;
 _getBaseAttackDamage         = 0x06081e0c;
 _getCurrentFriendshipStatBoost = 0x060863e4;
 _getAttackEffectivenessPower = 0x06081754;
+_getDefPiercingBonus         = 0x0608288c;
 
 _applyAntidoteLv2            = 0x06084b74;
 
+_g_specialAttackTable        = 0x06086d18;
+
+_g_attackerUnitID            = 0x06087e84;
 _g_spellToCastLevel          = 0x06087e94;
 _g_currentVictimUnitID       = 0x06087e98;
 _g_attackDodged              = 0x06087ea2;
