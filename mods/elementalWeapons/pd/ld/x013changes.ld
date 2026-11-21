@@ -1,8 +1,12 @@
 INCLUDE "x013.ld"
 
+INCLUDE "1st.ld"
 INCLUDE "x002_extern.ld"
 INCLUDE "x012_extern.ld"
 INCLUDE "x1_extern.ld"
+
+ASSERT(_g_currentVictimUnitID - _g_attackerUnitID == 0x14,
+       "g_currentVictimUnitID must be +0x14 ahead of g_attackerUnitID");
 
 SECTIONS
 {
@@ -28,6 +32,22 @@ SECTIONS
         . = ALIGN(4);
     }
 
+    . = 0x06081c40;
+    .getSpellPowerAttackInnate : {
+        KEEP(*(.getSpellPowerAttackInnate));
+        KEEP(*(.getSpellPowerAttackInnateOrScripted));
+        . = ALIGN(4);
+    }
+
+    . = 0x06081cd4;
+    .getSpellPowerAttackScripted : {
+        KEEP(*(.getSpellPowerAttackScripted));
+        KEEP(*(.scaleByElementAndApplyPiercingHook));
+        KEEP(*(.multiplyDamageByWeaponElementPowerForSpecial));
+        . = ALIGN(4);
+    }
+
     /* Discard a bunch of irrelevant stuff. */
     /DISCARD/ : { *(.comment .note.* .rel.* .rela.*) }
+
 }

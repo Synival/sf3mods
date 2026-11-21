@@ -3,3 +3,13 @@
 
 ; New function to calculate base damage
 { elf=x013changes.elf section=.getBaseAttackDamage offset=0x1fe0 until=0x20e0 }
+
+; Consolidating spell power functions:
+;   getSpellAttackPowerInnate() + new subroutine
+{ elf=x013changes.elf section=.getSpellPowerAttackInnate offset=0x1df8 until=0x1e8c }
+
+;   getSpellAttackPowerScripted()
+{ elf=x013changes.elf section=.getSpellPowerAttackScripted offset=0x1e8c until=0x1f0c }
+
+; Hook in updated getDefPiercingBonus() to apply elemental bonuses to non-elemenal specials
+2de8,06082ac4,06081e98

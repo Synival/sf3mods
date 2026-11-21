@@ -82,7 +82,7 @@ static const battleMap_t *g_battleMap = (void *) 0x060b6000;
 // applied to the damage referenced. The result is a 50% boost for resistance of -100 and a 50% penalty for resistance
 // of +100.
 [[gnu::section(".multiplyDamageByWeaponElementPower")]]
-void multiplyDamageByWeaponElementPower(battleUnit_t *attacker, battleUnit_t *victim, int32_t *damage) {
+void multiplyDamageByWeaponElementPower(const battleUnit_t *attacker, const battleUnit_t *victim, int32_t *damage) {
     // Don't bother if there's no weapon.
     const uint16_t weapon = attacker->weapon & 0x01FF;
     if (weapon == 0)
@@ -146,4 +146,28 @@ int32_t getBaseAttackDamage(int32_t attackerId, int32_t victimId) {
   g_effectivenessBonus = (int8_t) effectivenessBonus;
 
   return damage + effectivenessBonus;
+}
+
+// --------------------------------------------------------------------------------------------------------------------
+
+[[gnu::section(".multiplyDamageByWeaponElementPowerForSpecial")]]
+void multiplyDamageByWeaponElementPowerForSpecial(int32_t specialId, int32_t *damage) {
+    // Only if special doen't have a 'low' value of 100 (dec), which indicates an elemental attack.
+    if (g_specialAttackTable[specialId].lowPow == 100)
+        return;
+
+    // Little hack to avod supplying `g_currentVictimID`, which is exacty 0x14 bytes ahead.
+    // GCC can't optimize for this, but we can! Just be careful...
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Warray-bounds"
+#pragma GCC diagnostic ignored "-Wstringop-overflow"
+    const uint8_t *addr = (const uint8_t *) &g_attackerUnitID;
+    const int32_t attackerId = *(const int32_t *) addr;
+    const int32_t victimId   = *(const int32_t *) (addr + 0x14);
+#pragma GCC diagnostic pop
+
+    const battleUnit_t *attacker = getUnit(attackerId);
+    const battleUnit_t *victim   = getUnit(victimId);
+
+    multiplyDamageByWeaponElementPower(attacker, victim, damage);
 }
