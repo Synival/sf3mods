@@ -11,6 +11,7 @@
 
 extern battleUnit_t *getUnit(int32_t battleId);
 extern item_t *getItem(int32_t itemId);
+extern spell_t *getSpell(int32_t spellId);
 
 extern void beginScene();
 extern void endScene();

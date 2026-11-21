@@ -141,4 +141,57 @@ static_assert(sizeof(item_t) == 0x18);
 
 // --------------------------------------------------------------------------------------------------------------------
 
+enum {
+    SPELL_TARGET_SELF  = 0,
+    SPELL_TARGET_ENEMY = 1,
+    SPELL_TARGET_ALLY  = 2,
+    SPELL_TARGET_ANY   = 3,
+};
+
+typedef uint8_t  spellTarget_e8;
+typedef uint16_t spellTarget_e16;
+typedef uint32_t spellTarget_e32;
+
+enum {
+    SPELL_BEHAVIOR_ATTACK  = 0,
+    SPELL_BEHAVIOR_EFFECT  = 1,
+    SPELL_BEHAVIOR_HEAL    = 2,
+    SPELL_BEHAVIOR_UTILITY = 3,
+};
+
+typedef uint8_t  spellBehavior_e8;
+typedef uint16_t spellBehavior_e16;
+typedef uint32_t spellBehavior_e32;
+
+enum {
+    SPELL_ABILITY_TYPE_MAGIC    = 0,
+    SPELL_ABILITY_TYPE_INNATE   = 1,
+    SPELL_ABILITY_TYPE_SCRIPTED = 2,
+};
+
+typedef uint8_t  abilityType_e8;
+typedef uint16_t abilityType_e16;
+typedef uint32_t abilityType_e32;
+
+typedef struct _spellLevel_t {
+    uint8_t range;
+    uint8_t area;
+    uint8_t mpCost;
+    uint8_t power;
+} spellLevel_t;
+
+static_assert(sizeof(spellLevel_t) == 0x04);
+
+typedef struct _spell_t {
+    spellTarget_e8   target;
+    spellBehavior_e8 behavior;
+    element_e8       element;
+    abilityType_e8   abilityType;
+    spellLevel_t     levels[4];
+} spell_t;
+
+static_assert(sizeof(spell_t) == 0x14);
+
+// --------------------------------------------------------------------------------------------------------------------
+
 #endif // #ifndef INCLUDED_SF3_X002_TYPES_H

@@ -17,3 +17,4 @@ _g_spellToCastLevel          = 0x06087d84;
 _g_currentVictimUnitID       = 0x06087d88;
 _g_attackDodged              = 0x06087d92;
 _g_effectivenessBonus        = 0x06087d9b;
+_g_battleTurnAction          = 0x06087e3c;

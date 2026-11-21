@@ -31,6 +31,7 @@ extern int16_t g_spellToCastLevel;
 extern int32_t g_currentVictimUnitID;
 extern bool g_attackDodged;
 extern int8_t g_effectivenessBonus;
+extern turnAction_t *g_battleTurnAction;
 
 // --------------------------------------------------------------------------------------------------------------------
 

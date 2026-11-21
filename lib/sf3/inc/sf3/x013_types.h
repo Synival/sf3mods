@@ -5,6 +5,8 @@
 
 #include "common.h"
 
+#include <stddef.h>
+
 // --------------------------------------------------------------------------------------------------------------------
 
 enum {
@@ -80,6 +82,41 @@ enum {
 typedef uint8_t  battleCmd_e8;
 typedef uint16_t battleCmd_e16;
 typedef uint32_t battleCmd_e32;
+
+// --------------------------------------------------------------------------------------------------------------------
+
+enum {
+    TURN_ACTION_FAILED      = -1,
+    TURN_ACTION_ATTACK      =  0,
+    TURN_ACTION_CAST        =  1,
+    TURN_ACTION_USE_ITEM    =  2,
+    TURN_ACTION_USE_WEAPON  =  3,
+    TURN_ACTION_CONFUSED    =  4,
+    TURN_ACTION_GIVE        = 91,
+    TURN_ACTION_DROP        = 92,
+    TURN_ACTION_FIRE_CANNON = 93,
+    TURN_ACTION_MAP_MOVE    = 95,
+    TURN_ACTION_TALK        = 96,
+    TURN_ACTION_EGRESS      = 97,
+    TURN_ACTION_INSPECT     = 98,
+    TURN_ACTION_STAY        = 99,
+};
+
+typedef uint8_t  turnAction_e8;
+typedef uint16_t turnAction_e16;
+typedef uint32_t turnAction_e32;
+
+// --------------------------------------------------------------------------------------------------------------------
+
+typedef struct _turnAction_t {
+    turnAction_e16 order;
+    int16_t        arg1;
+    int16_t        arg2;
+    int16_t        numVictims;
+    int16_t        victimIds[64];
+} turnAction_t;
+
+static_assert(sizeof(turnAction_t) == 0x88);
 
 // --------------------------------------------------------------------------------------------------------------------
 

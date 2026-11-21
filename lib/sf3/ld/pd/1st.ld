@@ -19,6 +19,7 @@ _soundCommand_PAUSE                             = 0x06017d08;
 _soundCommand_PAUSE_OFF                         = 0x06017d94;
 _soundCommand_SEQUENCE_VOLUME                   = 0x06017e20;
 _unknownResumeFromPauseRelatedFunc              = 0x06018994;
+_divSigned                                      = 0x06020de8;
 
 _g_buttonsDown                                  = 0x06021480;
 _g_bufferedButtonsDown                          = 0x06021482;

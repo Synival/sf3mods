@@ -2,6 +2,7 @@
 
 _g_saveDataPtr        = 0x06028854;
 _getUnit              = 0x06028884;
+_getSpell             = 0x060289d4;
 _getItem              = 0x060289ec;
 _beginScene           = 0x06028b30;
 _endScene             = 0x06028b3c;
