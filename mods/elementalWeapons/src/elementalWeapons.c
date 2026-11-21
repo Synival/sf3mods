@@ -1,5 +1,6 @@
 #include <sf3/x013.h>
 
+#include <sf3/1st.h>
 #include <sf3/x002.h>
 #include <sf3/x012.h>
 #include <sf3/x1.h>
@@ -57,9 +58,7 @@ alignas(4) const uint16_t c_elementalWeapons[] = {
     0,
     0,
 
-    /* 31-39 */
-    0,
-    0,
+    /* 31-37 */
     0,
     0,
     0,
@@ -82,7 +81,9 @@ static const battleMap_t *g_battleMap = (void *) 0x060b6000;
 // applied to the damage referenced. The result is a 50% boost for resistance of -100 and a 50% penalty for resistance
 // of +100.
 [[gnu::section(".multiplyDamageByWeaponElementPower")]]
-void multiplyDamageByWeaponElementPower(const battleUnit_t *attacker, const battleUnit_t *victim, int32_t *damage) {
+void multiplyDamageByWeaponElementPower(
+    const battleUnit_t *attacker, const battleUnit_t *victim, int32_t *damage, uint8_t baseline
+) {
     // Don't bother if there's no weapon.
     const uint16_t weapon = attacker->weapon & 0x01FF;
     if (weapon == 0)
@@ -96,8 +97,8 @@ void multiplyDamageByWeaponElementPower(const battleUnit_t *attacker, const batt
 
     // Get and return the amount of damage the attack should do as a percentage.
     element_e8 element = GET_ELEMENT_FROM_ITEM_ELEMENT_PAIR(*ew);
-    int32_t mult = 201 - victim->state.magicRes[element]; // (201 because 200 won't compile for reasons)
-    *damage = (*damage * mult) / 201;
+    int32_t mult = baseline - victim->state.magicRes[element];
+    *damage = divSigned(*damage * mult, baseline);
 }
 
 // --------------------------------------------------------------------------------------------------------------------
@@ -119,7 +120,7 @@ int32_t getBaseAttackDamage(int32_t attackerId, int32_t victimId) {
 
   // Calculate base attack and apply elemental bonuses if applicable.
   int32_t damage = atkBonus + atk;
-  multiplyDamageByWeaponElementPower(attacker, victim, &damage); // New!
+  multiplyDamageByWeaponElementPower(attacker, victim, &damage, 200); // New!
 
   // Reduce base damage by enemy defense.:w
   damage -= (def + defBonus + alsoDef);
@@ -151,11 +152,12 @@ int32_t getBaseAttackDamage(int32_t attackerId, int32_t victimId) {
 // --------------------------------------------------------------------------------------------------------------------
 
 [[gnu::section(".multiplyDamageByWeaponElementPowerForSpecial")]]
-void multiplyDamageByWeaponElementPowerForSpecial(int32_t specialId, int32_t *damage) {
+void multiplyDamageByWeaponElementPowerForSpecial(int32_t low, int32_t *damage) {
     // Only if special doen't have a 'low' value of 100 (dec), which indicates an elemental attack.
-    if (g_specialAttackTable[specialId].lowPow == 100)
+    if (low == 100)
         return;
 
+#if 0
     // Little hack to avod supplying `g_currentVictimID`, which is exacty 0x14 bytes ahead.
     // GCC can't optimize for this, but we can! Just be careful...
 #pragma GCC diagnostic push
@@ -165,9 +167,12 @@ void multiplyDamageByWeaponElementPowerForSpecial(int32_t specialId, int32_t *da
     const int32_t attackerId = *(const int32_t *) addr;
     const int32_t victimId   = *(const int32_t *) (addr + 0x14);
 #pragma GCC diagnostic pop
-
     const battleUnit_t *attacker = getUnit(attackerId);
     const battleUnit_t *victim   = getUnit(victimId);
+#endif
 
-    multiplyDamageByWeaponElementPower(attacker, victim, damage);
+    const battleUnit_t *attacker = getUnit(g_attackerUnitID);
+    const battleUnit_t *victim   = getUnit(g_currentVictimUnitID);
+
+    multiplyDamageByWeaponElementPower(attacker, victim, damage, 100);
 }
