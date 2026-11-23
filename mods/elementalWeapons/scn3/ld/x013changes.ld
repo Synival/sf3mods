@@ -32,18 +32,9 @@ SECTIONS
         . = ALIGN(4);
     }
 
-    . = 0x06081c20;
-    .getSpellPowerAttackInnate : {
-        KEEP(*(.getSpellPowerAttackInnate));
-        KEEP(*(.getSpellPowerAttackInnateOrScripted));
-        . = ALIGN(4);
-    }
-
-    . = 0x06081cb4;
-    .getSpellPowerAttackScripted : {
-        KEEP(*(.getSpellPowerAttackScripted));
-        KEEP(*(.scaleByElementAndApplyPiercingHook));
-        KEEP(*(.multiplyDamageByWeaponElementPowerForSpecial));
+    . = 0x060829f0;
+    .getSpecialBonusDamage : {
+        KEEP(*(.getSpecialBonusDamage));
         . = ALIGN(4);
     }
 

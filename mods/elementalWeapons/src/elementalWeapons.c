@@ -151,28 +151,46 @@ int32_t getBaseAttackDamage(int32_t attackerId, int32_t victimId) {
 
 // --------------------------------------------------------------------------------------------------------------------
 
-[[gnu::section(".multiplyDamageByWeaponElementPowerForSpecial")]]
-void multiplyDamageByWeaponElementPowerForSpecial(int32_t low, int32_t *damage) {
-    // Only if special doen't have a 'low' value of 100 (dec), which indicates an elemental attack.
-    if (low == 100)
-        return;
+[[gnu::section(".getSpecialBonusDamage")]]
+int32_t getSpecialBonusDamage(bool isVictimSide) {
+    int16_t specialId = isVictimSide ? g_victimSpecialID : g_attackerSpecialID;
+    const specialAttack_t *special = &(g_specialAttackTable[specialId]);
 
-#if 0
-    // Little hack to avod supplying `g_currentVictimID`, which is exacty 0x14 bytes ahead.
-    // GCC can't optimize for this, but we can! Just be careful...
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Warray-bounds"
-#pragma GCC diagnostic ignored "-Wstringop-overflow"
-    const uint8_t *addr = (const uint8_t *) &g_attackerUnitID;
-    const int32_t attackerId = *(const int32_t *) addr;
-    const int32_t victimId   = *(const int32_t *) (addr + 0x14);
-#pragma GCC diagnostic pop
-    const battleUnit_t *attacker = getUnit(attackerId);
-    const battleUnit_t *victim   = getUnit(victimId);
-#endif
+    const battleUnit_t *victim = getUnit(g_currentVictimUnitID);
 
-    const battleUnit_t *attacker = getUnit(g_attackerUnitID);
-    const battleUnit_t *victim   = getUnit(g_currentVictimUnitID);
+    uint8_t lowPow  = special->lowPow;
+    uint8_t midPow  = special->midPow;
+    uint8_t highPow = special->highPow;
 
-    multiplyDamageByWeaponElementPower(attacker, victim, damage, 100);
+    int32_t power;
+
+    // Special case for elemental attacks!
+    //   lowPow  = unused
+    //   midPow  = elementId
+    //   highPow = power
+    if (lowPow == 100) {
+        int32_t res =
+            (int32_t) victim->state.magicRes[midPow] +
+            (int32_t) getCurrentFriendshipStatBoost(g_currentVictimUnitID, FBONUS_MAGIC_RES);
+
+        power = (res >=  100) ? 0 :
+                (res <= -100) ? (highPow * 2) :
+                ((highPow * (100 - res)) / 100);
+    }
+    // Standard special attack. Damage is random, interpolated with a mid point. Pseudo-normal distribution.
+    else {
+        const battleUnit_t *attacker = getUnit(g_attackerUnitID);
+
+        int32_t interp = getBoundedRandom(8) + getBoundedRandom(8);
+        power = (interp < 8)
+            ? (midPow  - lowPow) * (interp)     / 7 + lowPow
+            : (highPow - midPow) * (interp - 7) / 7 + midPow;
+
+        multiplyDamageByWeaponElementPower(attacker, victim, &power, 100); // New!
+    }
+
+    // Some attacks add bonus damage based on enemy def. Add this.
+    power += getDefPiercingBonus(specialId);
+
+    return power;
 }

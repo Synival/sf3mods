@@ -1,0 +1,8 @@
+; Consolidating spell power functions:
+; ------------------------------------
+
+; - getSpellAttackPowerInnate() + new subroutine
+{ elf=x013changes.elf section=.getSpellPowerAttackInnate offset=0x1bd0 until=0x1c94 }
+
+; - getSpellAttackPowerScripted()
+{ elf=x013changes.elf section=.getSpellPowerAttackScripted offset=0x1c94 until=0x1d44 }

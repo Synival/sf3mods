@@ -32,22 +32,12 @@ SECTIONS
         . = ALIGN(4);
     }
 
-    . = 0x06081c40;
-    .getSpellPowerAttackInnate : {
-        KEEP(*(.getSpellPowerAttackInnate));
-        KEEP(*(.getSpellPowerAttackInnateOrScripted));
-        . = ALIGN(4);
-    }
-
-    . = 0x06081cd4;
-    .getSpellPowerAttackScripted : {
-        KEEP(*(.getSpellPowerAttackScripted));
-        KEEP(*(.scaleByElementAndApplyPiercingHook));
-        KEEP(*(.multiplyDamageByWeaponElementPowerForSpecial));
+    . = 0x06082a10;
+    .getSpecialBonusDamage : {
+        KEEP(*(.getSpecialBonusDamage));
         . = ALIGN(4);
     }
 
     /* Discard a bunch of irrelevant stuff. */
     /DISCARD/ : { *(.comment .note.* .rel.* .rela.*) }
-
 }
