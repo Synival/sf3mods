@@ -9,11 +9,14 @@
 
 // --------------------------------------------------------------------------------------------------------------------
 
+extern void writeDebugBattleLoadingInfo();
+extern void writeDebugPolyCharAnimationInfo(const polyChar_t *polyChar);
+
 extern ANGLE getPitchBetweenPoints(VECTOR *vec1, VECTOR *vec2);
 extern ANGLE getFlippedAngle(ANGLE angle);
 
-extern void polyCharGetPosition(polyChar_t *polyChar, VECTOR *vecOut, polyCharPos_e32 pos);
-extern void getPolyCharPosition0x01or0x09ifNotFound(polyChar_t *polyChar, VECTOR *vecOut);
+extern void polyCharGetPosition(const polyChar_t *polyChar, VECTOR *vecOut, polyCharPos_e32 pos);
+extern void getPolyCharPosition0x01or0x09ifNotFound(const polyChar_t *polyChar, VECTOR *vecOut);
 
 #if SCENARIO >= 2
 extern void camFuncCam1Near();
@@ -54,6 +57,8 @@ extern void pd_FUN_060909bc();
 extern int32_t getBattleModelIdFileId(int32_t battleModelId);
 
 // --------------------------------------------------------------------------------------------------------------------
+
+extern bool g_debugMode_X014;
 
 extern polyChar_t *g_polyCharAttacker;
 extern polyChar_t *g_polyCharVictim;

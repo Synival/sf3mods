@@ -2,6 +2,7 @@
 
 _writeDebugStr                                  = 0x0600d298;
 _writeDebugUIntWithoutZeroes                    = 0x0600d2b4;
+_writeDebugFixed                                = 0x0600cb34;
 _hexToDec                                       = 0x0600e8b0;
 _waitFrames                                     = 0x060111c0;
 _loadFileToAddrWithCallback                     = 0x0601249c;
@@ -9,6 +10,7 @@ _onSequenceLoaded                               = 0x06012814;
 _onLoadTonFile                                  = 0x060128b4;
 _queueAudioCommand                              = 0x060128e8;
 _runMusicCommand                                = 0x0601293c;
+_getSomeAvailableVRamThingBackwards             = 0x06013be0;
 _getDebugTextCoords                             = 0x06013c50;
 _maybeSomeDspSetup                              = 0x06014fec;
 _soundCommand_SOUND_INITIALIZE_initDSP          = 0x06017a1c;
@@ -45,6 +47,7 @@ _g_sfxCommands                                  = 0x06023870;
 _g_setToTwoToFadeInNextTrack                    = 0x06023890;
 _g_audioLock                                    = 0x06023894;
 _g_isPlayingJingle                              = 0x06023898;
+_g_debugMode                                    = 0x060239ee;
 _g_currentTonId                                 = 0x060282e4;
 _g_stopChannel1AndResumeChannel0Timer           = 0x060282e8;
 _g_currentSeqLoadedInBank3                      = 0x060282ec;

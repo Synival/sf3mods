@@ -8,7 +8,6 @@
 #include "common.h"
 
 // --------------------------------------------------------------------------------------------------------------------
-
 extern void memcpy(void *dst, const void *src, uint32_t size);
 extern FIXED sin(ANGLE theta);
 extern FIXED cos(ANGLE theta);
@@ -48,8 +47,10 @@ extern void rotateGbrMatrixY(FIXED rotY);
 
 extern int32_t writeDebugStr(const char *str, const uint16_t *coords);
 extern int32_t writeDebugUIntWithoutZeroes(uint32_t value, const uint16_t *coords);
+extern int32_t writeDebugFixed(FIXED value, const uint16_t *coords);
 extern uint32_t hexToDec(uint32_t value);
-extern uint16_t *getDebugTextCoords(int x, int y);
+extern uint32_t getSomeAvailableVRamThingBackwards();
+extern uint16_t *getDebugTextCoords(uint8_t x, uint8_t y);
 
 #if SCENARIO == 1 || SCENARIO == 2
 // Something necessary for button buffering
@@ -66,6 +67,8 @@ extern interactable_t *g_interactableTablePtr;
 
 extern int g_isPlayingJingle;
 extern int g_stopChannel1AndResumeChannel0Timer;
+
+extern bool g_debugMode;
 
 // --------------------------------------------------------------------------------------------------------------------
 

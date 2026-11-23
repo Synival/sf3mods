@@ -108,7 +108,7 @@ typedef struct _polyChar_scn1_t {
     VECTOR boundingBoxHalfSize; // 0x78
 
     // (pos is now 0x84)
-    uint8_t stuff_0x8a[0x5c];
+    uint8_t stuff_0x84[0x5c];
 
     // (pos is now 0xe0)
     bool inAttackAnimation; // 0xe0
@@ -149,21 +149,42 @@ typedef struct _polyChar_scn3_t {
     ANGLES rot;
 
     // (offset is now 0x3e)
-    uint8_t notYetDefined2[0x06];
+    uint8_t stuff_0x06[0x06];
 
     // (offset is now 0x44)
     uint16_t battleId;
     uint16_t battleModelId;
+    int16_t numXPDataLists;
+    int16_t weaponModelListIdx;
+    uint16_t someGouraudTableOffset;
+    int16_t gouraud;
+    int16_t globalTexIdStart;
+    int16_t paletteId1;
+    FIXED animationSpeed;
+    FIXED frameAccumulator;
+    FIXED currentFrameFixed;
+    FIXED idleAnimationSpeed;
+    int16_t animCount;
+    animId_e16 animId;
+    animId_e16 attackAnimLoadedId;
+    int16_t animStartFrame;
+    int16_t nextAnimId;
+    int16_t nextAnimTimer;
+    int16_t polygonCount;
+    int16_t pointCount;
 
-    // (offset is now 0x48)
-    uint8_t notYetDefined3[0x130];
+    // (offset is now 0x74)
+    uint8_t stuff_0x74[0x104];
 
     // 0x178 bytes
 } polyChar_scn3_t;
 
 static_assert(offsetof(polyChar_scn3_t, pos)            == 0x20);
-static_assert(offsetof(polyChar_scn3_t, notYetDefined2) == 0x3e);
+static_assert(offsetof(polyChar_scn3_t, stuff_0x06)     == 0x3e);
 static_assert(offsetof(polyChar_scn3_t, battleId)       == 0x44);
+static_assert(offsetof(polyChar_scn3_t, animationSpeed) == 0x54);
+static_assert(offsetof(polyChar_scn3_t, animCount)      == 0x64);
+static_assert(offsetof(polyChar_scn3_t, polygonCount)   == 0x70);
 static_assert(sizeof(polyChar_scn3_t) == 0x178);
 
 #if SCENARIO == 1
