@@ -22,6 +22,7 @@ extern bool queueBCmdMessageIfSettingOn(int16_t msg);
 
 extern int32_t getCurrentFriendshipStatBoost(int32_t unitId, friendshipBonus_e32 bonus);
 extern int32_t getAttackEffectivenessPower(int32_t attackerId, int32_t victimId);
+extern int32_t getDefPiercingBonus(int32_t specialId);
 
 extern bool applyAntidoteLv2(const battleUnit_t *unit);
 
@@ -32,6 +33,9 @@ extern int16_t g_spellToCastLevel;
 extern int32_t g_currentVictimUnitID;
 extern bool g_attackDodged;
 extern int8_t g_effectivenessBonus;
+extern int16_t g_attackerSpecialID;
+extern int16_t g_victimSpecialID;
+
 extern turnAction_t *g_battleTurnAction;
 extern const specialAttack_t g_specialAttackTable[];
 

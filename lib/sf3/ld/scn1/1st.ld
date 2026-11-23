@@ -24,6 +24,7 @@ _popGbrMatrix                    = 0x06015c88;
 _pushGbrMatrix                   = 0x06015cac;
 _divSigned                       = 0x0601f914;
 _memcpy                          = 0x0601fa08;
+_getBoundedRandom                = 0x06013e30;
 
 _g_buttonsDown                   = 0x0601fc48;
 _g_bufferedButtonsDown           = 0x0601fc4a;
