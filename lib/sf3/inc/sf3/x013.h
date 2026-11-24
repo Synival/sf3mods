@@ -35,9 +35,14 @@ extern bool g_attackDodged;
 extern int8_t g_effectivenessBonus;
 extern int16_t g_attackerSpecialID;
 extern int16_t g_victimSpecialID;
+extern bool g_criticalHit;
+extern bool g_counterAttack;
 
 extern turnAction_t *g_battleTurnAction;
 extern const specialAttack_t g_specialAttackTable[];
+
+extern battleCmd_e16 g_battleCommandQueue[];
+extern battleCmd_e16 *g_battleCommandQueueWrite;
 
 // --------------------------------------------------------------------------------------------------------------------
 

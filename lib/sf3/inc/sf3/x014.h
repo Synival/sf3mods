@@ -9,6 +9,15 @@
 
 // --------------------------------------------------------------------------------------------------------------------
 
+// Forward declarations
+typedef struct _dialog_t dialog_t;
+
+// --------------------------------------------------------------------------------------------------------------------
+
+extern int getPolyCharBoneCount();
+extern int getPolyCharModelPartCount();
+extern int getSprEffCount();
+
 extern void writeDebugBattleLoadingInfo();
 extern void writeDebugPolyCharAnimationInfo(const polyChar_t *polyChar);
 
@@ -32,6 +41,7 @@ extern void camFuncTitan();
 extern void setCameraFunc(voidFunc_f *camFunc);
 
 extern void showBattleMessage(int msg, bool canSuppress);
+extern void waitForButtonDownForNFrames(int32_t frames);
 extern void wait10FramesThen30OrButtonPress();
 extern void loadAndStartBattleAnimation(polyChar_t *polyChar, animId_e32 animId);
 
@@ -55,6 +65,9 @@ extern void someKindOfUpdateUnitStats(polyChar_t *polyChar);
 extern void pd_FUN_060909bc();
 
 extern int32_t getBattleModelIdFileId(int32_t battleModelId);
+
+extern polyCharAnimDef_t *getPolyCharAnimDef(const polyChar_t *polyChar, animId_e32 animId);
+extern uint16_t getAnimDefStartFrame(const polyCharAnimDef_t *animDef);
 
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -82,6 +95,15 @@ extern int32_t g_battleAnimationLoadingFileQueueIdx;
 extern polyChar_scn1_t *g_battleAnimationLoadingPolyChar;
 
 extern int16_t g_battleStageLoadState;
+extern int16_t g_someStageLoadingVariable1;
+extern int16_t g_someStageLoadingVariable2;
+
+extern FIXED g_debugLastThreeAttackerFrames[3];
+extern FIXED g_debugLastThreeVictimFrames[3];
+
+extern dialog_t *g_battleDialog;
+extern uint8_t g_linesWrittenInBattleDialog;
+extern const uint8_t g_messageSpeeds[4];
 
 // --------------------------------------------------------------------------------------------------------------------
 

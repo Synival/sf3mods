@@ -23,6 +23,7 @@ _soundCommand_SEQUENCE_VOLUME                   = 0x06017e20;
 _unknownResumeFromPauseRelatedFunc              = 0x06018994;
 _divSigned                                      = 0x06020de8;
 _getBoundedRandom                               = 0x06013790;
+_strncpy                                        = 0x060210c4;
 
 _g_buttonsDown                                  = 0x06021480;
 _g_bufferedButtonsDown                          = 0x06021482;
@@ -48,6 +49,9 @@ _g_setToTwoToFadeInNextTrack                    = 0x06023890;
 _g_audioLock                                    = 0x06023894;
 _g_isPlayingJingle                              = 0x06023898;
 _g_debugMode                                    = 0x060239ee;
+_g_totalVertices                                = 0x060243b0;
+_g_dispPolygons                                 = 0x060243b2;
+_g_totalPolygons                                = 0x060243b4;
 _g_currentTonId                                 = 0x060282e4;
 _g_stopChannel1AndResumeChannel0Timer           = 0x060282e8;
 _g_currentSeqLoadedInBank3                      = 0x060282ec;

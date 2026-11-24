@@ -253,4 +253,14 @@ typedef struct _intFunc_scn1_t intFunc_scn1_t;
 
 // --------------------------------------------------------------------------------------------------------------------
 
+typedef struct _polyCharAnimDef_t {
+    int16_t startFrame;
+    int16_t frameCount;
+    animId_e16 animId;
+    int16_t distanceFromEnemy;
+    int16_t *animCmds;
+} polyCharAnimDef_t;
+
+// --------------------------------------------------------------------------------------------------------------------
+
 #endif // #ifndef INCLUDED_SF3_X014_TYPES_H

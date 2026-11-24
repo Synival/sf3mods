@@ -56,12 +56,12 @@ static inline bool applyAntidoteLv1(const battleUnit_t *unit) {
     // Cure poison, if inflicted.
     const bool poisoned  = unit->state.poisonedTurns  != 0;
     if (poisoned)
-        removeCondition(BCMD_REMOVE_POISON, MSG_NO_LONGER_POISONED);
+        removeCondition(BCMD_SET_POISON_TURNS, MSG_NO_LONGER_POISONED);
 
     // Cure paralysis, if inflicted.
     const bool paralyzed = unit->state.paralyzedTurns != 0;
     if (paralyzed)
-        removeCondition(BCMD_REMOVE_PARALYSIS, MSG_NO_LONGER_PARALYZED);
+        removeCondition(BCMD_SET_PARALYSIS_TURNS, MSG_NO_LONGER_PARALYZED);
 
     // Return 'true' if this cured something.
     return paralyzed || poisoned;

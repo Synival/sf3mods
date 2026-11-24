@@ -24,6 +24,10 @@ extern bool getGameFlag(uint32_t flag);
 extern uint16_t g_subLoadingId;
 // TODO: Make this part of g_saveData
 extern uint16_t g_saveDataMpdFileId;
+// TODO: Make this part of g_saveData
+extern uint8_t g_showBattleMessages;
+// TODO: Make this part of g_saveData
+extern uint8_t g_maybeMessageSpeed;
 
 // --------------------------------------------------------------------------------------------------------------------
 

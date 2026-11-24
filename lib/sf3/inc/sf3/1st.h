@@ -8,7 +8,10 @@
 #include "common.h"
 
 // --------------------------------------------------------------------------------------------------------------------
+
 extern void memcpy(void *dst, const void *src, uint32_t size);
+extern char *strncpy(char *dst, const char *src, int32_t len);
+
 extern FIXED sin(ANGLE theta);
 extern FIXED cos(ANGLE theta);
 extern ANGLE atan2(FIXED y, FIXED x);
@@ -69,6 +72,10 @@ extern int g_isPlayingJingle;
 extern int g_stopChannel1AndResumeChannel0Timer;
 
 extern bool g_debugMode;
+
+extern int16_t g_totalVertices;
+extern int16_t g_dispPolygons;
+extern int16_t g_totalPolygons;
 
 // --------------------------------------------------------------------------------------------------------------------
 

@@ -34,7 +34,7 @@ static musicDebugDialog_t mdd;
 
 [[gnu::section(".musicDebugMenu")]]
 void musicDebugMenu() {
-    resetDialogState();
+    setDialogWriteDefaults();
 
     // Create our new dialog.
     mdd.dialog = newDialogWithSfx(160, 100, 160, 0x28, false);
