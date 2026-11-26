@@ -16,11 +16,17 @@ _applyAntidoteLv2            = 0x06084d0c;
 
 _g_specialAttackTable        = 0x06087104;
 
+_g_battleCommandQueueWrite   = 0x06087ed4;
 _g_attackerUnitID            = 0x06087ee4;
 _g_spellToCastLevel          = 0x06087ef4;
 _g_currentVictimUnitID       = 0x06087ef8;
+_g_criticalHit               = 0x06087f00;
+_g_counterAttack             = 0x06087f01;
 _g_attackDodged              = 0x06087f02;
 _g_effectivenessBonus        = 0x06087f0b;
 _g_attackerSpecialID         = 0x06087f12;
 _g_victimSpecialID           = 0x06087f14;
 _g_battleTurnAction          = 0x06087fac;
+
+/* In scratch memory */
+_g_battleCommandQueue        = 0x060fd400;

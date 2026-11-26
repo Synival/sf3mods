@@ -3,9 +3,9 @@
 
 // --------------------------------------------------------------------------------------------------------------------
 
-#include "x014_types.h"
-
 #include "common.h"
+
+#include "x014_types.h"
 
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -75,6 +75,9 @@ extern bool g_debugMode_X014;
 
 extern polyChar_t *g_polyCharAttacker;
 extern polyChar_t *g_polyCharVictim;
+
+// This doesn't really exist; it's actually the above two put together, just as an array for optimization's sake.
+extern polyChar_t *g_polyCharAttackerVictim[2];
 
 extern bool        g_flipPolyChars;
 extern animId_e16  g_attackerAnimId;

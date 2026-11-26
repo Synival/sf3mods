@@ -9,6 +9,7 @@
 
 // --------------------------------------------------------------------------------------------------------------------
 
+extern void memset(void *dst, uint8_t value, uint32_t size);
 extern void memcpy(void *dst, const void *src, uint32_t size);
 extern char *strncpy(char *dst, const char *src, int32_t len);
 
@@ -73,9 +74,11 @@ extern int g_stopChannel1AndResumeChannel0Timer;
 
 extern bool g_debugMode;
 
+#if SCENARIO != 1
 extern int16_t g_totalVertices;
 extern int16_t g_dispPolygons;
 extern int16_t g_totalPolygons;
+#endif
 
 // --------------------------------------------------------------------------------------------------------------------
 

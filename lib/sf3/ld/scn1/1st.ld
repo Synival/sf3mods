@@ -23,11 +23,19 @@ _resetColorFadeTransition        = 0x060148ac;
 _popGbrMatrix                    = 0x06015c88;
 _pushGbrMatrix                   = 0x06015cac;
 _divSigned                       = 0x0601f914;
+_memset                          = 0x0601f9b4;
 _memcpy                          = 0x0601fa08;
-_getBoundedRandom                = 0x06013e30;
+
+_writeDebugFixed                    = 0x0600b628;
+_writeDebugStr                      = 0x0600bf20;
+_writeDebugUIntWithoutZeroes        = 0x0600bf3c;
+_hexToDec                           = 0x0600ea10;
+_getSomeAvailableVRamThingBackwards = 0x06014258;
+_getDebugTextCoords                 = 0x060142c8;
 
 _g_buttonsDown                   = 0x0601fc48;
 _g_bufferedButtonsDown           = 0x0601fc4a;
+_g_debugMode                     = 0x0602205e;
 _g_interactableTablePtr          = 0x060220f0;
 _g_cameraPos                     = 0x06022110;
 _g_messageId                     = 0x06022144;

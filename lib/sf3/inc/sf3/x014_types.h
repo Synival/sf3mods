@@ -91,15 +91,21 @@ typedef struct _polyChar_scn1_t {
     uint8_t stuff_0x18[0x2c];
 
     // (pos is now 0x44)
-    int16_t battleId;       // 0x44
-    int16_t battleModelId;  // 0x46
-
-    // (pos is now 0x48)
-    uint8_t stuff_0x48[0x1e];
-
-    // (pos is now 0x66)
-    int16_t animId;         // 0x66
-    int16_t currentAnimId;  // 0x68
+    uint16_t unitId;
+    uint16_t battleModelId;
+    int16_t numXPDataLists;
+    int16_t weaponModelListIdx;
+    uint16_t someGouraudTableOffset;
+    int16_t gouraud;
+    int16_t globalTexIdStart;
+    int16_t paletteId1;
+    FIXED animationSpeed;
+    FIXED frameAccumulator;
+    FIXED currentFrameFixed;
+    FIXED idleAnimationSpeed;
+    int16_t animCount;
+    int16_t animId;
+    int16_t currentAnimId;
 
     // (pos is now 0x6a)
     uint8_t stuff_0x6a[0x0e];
@@ -132,7 +138,7 @@ typedef struct _polyChar_scn1_t {
     // 0x10c bytes
 } polyChar_scn1_t;
 
-static_assert(offsetof(polyChar_scn1_t, battleId)            == 0x44);
+static_assert(offsetof(polyChar_scn1_t, unitId)              == 0x44);
 static_assert(offsetof(polyChar_scn1_t, animId)              == 0x66);
 static_assert(offsetof(polyChar_scn1_t, boundingBoxHalfSize) == 0x78);
 static_assert(offsetof(polyChar_scn1_t, inAttackAnimation)   == 0xe0);
@@ -141,7 +147,7 @@ static_assert(sizeof(polyChar_scn1_t) == 0x10c);
 // TODO: Are Scn3 + PD the same?
 typedef struct _polyChar_scn3_t {
     // Not all of this is known, and not all of this has been entered yet out of laziness.
-    uint8_t notYetDefined1[0x20];
+    uint8_t stuff_0x00[0x20];
 
     // (offset is now 0x20)
     VECTOR pos;
@@ -152,7 +158,7 @@ typedef struct _polyChar_scn3_t {
     uint8_t stuff_0x06[0x06];
 
     // (offset is now 0x44)
-    uint16_t battleId;
+    uint16_t unitId;
     uint16_t battleModelId;
     int16_t numXPDataLists;
     int16_t weaponModelListIdx;
@@ -181,7 +187,7 @@ typedef struct _polyChar_scn3_t {
 
 static_assert(offsetof(polyChar_scn3_t, pos)            == 0x20);
 static_assert(offsetof(polyChar_scn3_t, stuff_0x06)     == 0x3e);
-static_assert(offsetof(polyChar_scn3_t, battleId)       == 0x44);
+static_assert(offsetof(polyChar_scn3_t, unitId)         == 0x44);
 static_assert(offsetof(polyChar_scn3_t, animationSpeed) == 0x54);
 static_assert(offsetof(polyChar_scn3_t, animCount)      == 0x64);
 static_assert(offsetof(polyChar_scn3_t, polygonCount)   == 0x70);

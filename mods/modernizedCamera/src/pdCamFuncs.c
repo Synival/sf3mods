@@ -40,7 +40,7 @@ static weaponRange_e8 polyCharGetWeaponRange(polyChar_t *polyChar) {
     if (polyChar == nullptr)
         return 0;
 
-    unit   = getUnit(polyChar->battleId);
+    unit   = getUnit(polyChar->unitId);
     weapon = getItem(unit->weapon);
     range  = weapon->range;
 

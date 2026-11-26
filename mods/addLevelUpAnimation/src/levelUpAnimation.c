@@ -75,7 +75,7 @@ void levelUpNew(levelUpInfo_t *levelUpInfo, polyChar_scn1_t *polyChar, battleUni
     someKindOfUpdateUnitStats(polyChar);
 
     // Show the "<someone> is now level <level>!" message.
-    pushMsgVariable(polyChar->battleId, MSGVAR_UNIT_ID);
+    pushMsgVariable(polyChar->unitId, MSGVAR_UNIT_ID);
     pushMsgVariable(levelUpInfo->newLevel, MSGVAR_NUMBER);
     showBattleMessage(0x7f2, false);
     wait10FramesThen30OrButtonPress();

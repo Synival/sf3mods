@@ -10,6 +10,7 @@ _writeStrToDialogAsWStr  = 0x060368c0;
 _writeStrToDialog        = 0x060368cc;
 _writeMsgToDialog        = 0x060368d8;
 _writeHexValueToDialog   = 0x060368fc;
+_pushMsgVariable         = 0x06036914;
 _setDialogWriteDefaults  = 0x06036920;
 _setDialogWriteColor     = 0x0603692c;
 _getMsgDimensions        = 0x06036968;

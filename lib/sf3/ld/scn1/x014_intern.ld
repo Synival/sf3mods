@@ -23,12 +23,23 @@ _loadAndStartBattleAnimation     = 0x06095744;
 _setAnimationSpeed               = 0x06095cac;
 _maybeGetAnimFrameCount0         = 0x06095d6c;
 
+_getSprEffCount                  = 0x06090840;
+_getPolyCharBoneCount            = 0x060963ec;
+_getPolyCharModelPartCount       = 0x060966fc;
+
+_writeDebugBattleLoadingInfo     = 0x060885b8;
+
+_getAnimDefStartFrame            = 0x06094c38;
+_getPolyCharAnimDef              = 0x06094c50;
+
+_g_polyCharAttackerVictim        = 0x060973e4; /* fake */
 _g_polyCharAttacker              = 0x060973e4;
 _g_polyCharVictim                = 0x060973e8;
 _g_battleStageLoadState          = 0x06097420;
 _g_battlePaletteTable1           = 0x06098828;
 _g_battleAnimationLoadingPolyChar = 0x0609caf4;
 _g_battleAnimationLoadingFileQueueIdx = 0x0609caf8;
+_g_debugMode_X014                = 0x0609ccb4;
 _g_flipPolyChars                 = 0x0609ccbc;
 _g_attackerSpecialId_X014        = 0x0609ccc0;
 _g_attackerAnimId                = 0x0609ccc2;

@@ -12,6 +12,7 @@ _getPolyCharModelPartCount       = 0x06098b80;
 _getAnimDefStartFrame            = 0x060965ec;
 _getPolyCharAnimDef              = 0x06096604;
 
+_g_polyCharAttackerVictim        = 0x0609a04c; /* fake */
 _g_polyCharAttacker              = 0x0609a04c;
 _g_polyCharVictim                = 0x0609a050;
 _g_someStageLoadingVariable1     = 0x0609d31c;
